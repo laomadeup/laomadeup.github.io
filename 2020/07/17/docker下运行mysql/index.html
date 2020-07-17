@@ -5,19 +5,18 @@
   
 
   
-  <title>unbutu下编译openjdk13 | Hexo</title>
+  <title>docker下运行mysql | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="安装GCC； 1sudo apt-get install build-essential       更新包 1sudo apt-get update       安装openJDK编译的依赖库 1sudo apt-get install libfreetype6-dev libcups2-dev libx11-dev libxext-dev libxrender-dev libxrandr-d">
+  <meta name="description" content="12345678title: docker上运行MySQLdate: 2020-07-15 21:21:07categories: - docker- mysqltags: - docker - mysql  1. docker上安装MySQL1docker pull mysql:latest    2. docker 上启动MySQL，MySQL服务一直运行1docker run -p 3306">
 <meta property="og:type" content="article">
-<meta property="og:title" content="unbutu下编译openjdk13">
-<meta property="og:url" content="http://yoursite.com/2020/07/09/unbutu%E4%B8%8B%E7%BC%96%E8%AF%91openjdk13/index.html">
+<meta property="og:title" content="docker下运行mysql">
+<meta property="og:url" content="http://yoursite.com/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="安装GCC； 1sudo apt-get install build-essential       更新包 1sudo apt-get update       安装openJDK编译的依赖库 1sudo apt-get install libfreetype6-dev libcups2-dev libx11-dev libxext-dev libxrender-dev libxrandr-d">
+<meta property="og:description" content="12345678title: docker上运行MySQLdate: 2020-07-15 21:21:07categories: - docker- mysqltags: - docker - mysql  1. docker上安装MySQL1docker pull mysql:latest    2. docker 上启动MySQL，MySQL服务一直运行1docker run -p 3306">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-07-09T13:28:15.000Z">
-<meta property="article:modified_time" content="2020-07-16T13:46:37.490Z">
+<meta property="article:published_time" content="2020-07-17T12:11:52.385Z">
+<meta property="article:modified_time" content="2020-07-17T12:48:37.591Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -67,10 +66,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-unbutu下编译openjdk13" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-docker下运行mysql" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/07/09/unbutu%E4%B8%8B%E7%BC%96%E8%AF%91openjdk13/" class="article-date">
-  <time datetime="2020-07-09T13:28:15.000Z" itemprop="datePublished">2020-07-09</time>
+    <a href="/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/" class="article-date">
+  <time datetime="2020-07-17T12:11:52.385Z" itemprop="datePublished">2020-07-17</time>
 </a>
     
   </div>
@@ -81,7 +80,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      unbutu下编译openjdk13
+      docker下运行mysql
     </h1>
   
 
@@ -89,56 +88,41 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li><p>安装GCC；</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br></pre></td></tr></table></figure>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">title: docker上运行MySQL</span><br><span class="line">date: 2020-07-15 21:21:07</span><br><span class="line">categories: </span><br><span class="line">- docker</span><br><span class="line">- mysql</span><br><span class="line">tags:</span><br><span class="line"> - docker</span><br><span class="line"> - mysql</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-docker上安装MySQL"><a href="#1-docker上安装MySQL" class="headerlink" title="1. docker上安装MySQL"></a>1. docker上安装MySQL</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql:latest</span><br></pre></td></tr></table></figure>
 
 
 
-</li>
-</ol>
-<ol start="2">
-<li><p>更新包</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+<h3 id="2-docker-上启动MySQL，MySQL服务一直运行"><a href="#2-docker-上启动MySQL，MySQL服务一直运行" class="headerlink" title="2. docker 上启动MySQL，MySQL服务一直运行"></a>2. docker 上启动MySQL，MySQL服务一直运行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 --name docker_mysql -e MYSQL_ROOT_PASSWORD=root -d mysql</span><br></pre></td></tr></table></figure>
 
+<p>（参数 -p 设置端口，–name 取名 ，-e MYSQL_ROOT_PASSWORD=root设置 账号为 root ，密码为 123456 ，</p>
+<p>  -d 表示作为一个守护进程在后台运行 ）</p>
+<h3 id="3-相关文件地址配置，可以在运行容器时设置："><a href="#3-相关文件地址配置，可以在运行容器时设置：" class="headerlink" title="3. 相关文件地址配置，可以在运行容器时设置："></a>3. 相关文件地址配置，可以在运行容器时设置：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD='password' -v $HOME/my:/etc/mysql/conf.d/ --name mysql  -d mysql</span><br></pre></td></tr></table></figure>
 
-
-</li>
-</ol>
-<ol start="3">
-<li><p>安装openJDK编译的依赖库</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libfreetype6-dev libcups2-dev libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev libasound2-dev libffi-dev autoconf libfontconfig1-dev</span><br></pre></td></tr></table></figure>
-</li>
-<li></li>
-</ol>
+<p>但要求对应路径对应文件已存在，才能成功挂载相内容到对应位置。</p>
+<blockquote>
+<p>-p 3306:3306：将容器的3306端口映射到主机的3306端口</p>
+<p>$HOME/my这个文件夹是存放my.cnf配置文件</p>
+<p>-e MYSQL_ROOT_PASSWORD=root：初始化root用户的密码</p>
+</blockquote>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/09/unbutu%E4%B8%8B%E7%BC%96%E8%AF%91openjdk13/" data-id="ckcqayu8t0007u4v15ag93k8x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/" data-id="ckcqayu8n0001u4v1fvop8ju0" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
-
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2020/07/15/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85docker/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          win10子系统上的ubuntu上安装docker
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/07/01/laomadeup-helloworld/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/07/16/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">hello world</div>
+      <div class="article-nav-title">win10下的wsl1升级为wsl2</div>
     </a>
   
 </nav>

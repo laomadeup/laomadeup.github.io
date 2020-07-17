@@ -64,6 +64,60 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-docker下运行mysql" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/" class="article-date">
+  <time datetime="2020-07-17T12:11:52.385Z" itemprop="datePublished">2020-07-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/">docker下运行mysql</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">title: docker上运行MySQL</span><br><span class="line">date: 2020-07-15 21:21:07</span><br><span class="line">categories: </span><br><span class="line">- docker</span><br><span class="line">- mysql</span><br><span class="line">tags:</span><br><span class="line"> - docker</span><br><span class="line"> - mysql</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-docker上安装MySQL"><a href="#1-docker上安装MySQL" class="headerlink" title="1. docker上安装MySQL"></a>1. docker上安装MySQL</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql:latest</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-docker-上启动MySQL，MySQL服务一直运行"><a href="#2-docker-上启动MySQL，MySQL服务一直运行" class="headerlink" title="2. docker 上启动MySQL，MySQL服务一直运行"></a>2. docker 上启动MySQL，MySQL服务一直运行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 --name docker_mysql -e MYSQL_ROOT_PASSWORD=root -d mysql</span><br></pre></td></tr></table></figure>
+
+<p>（参数 -p 设置端口，–name 取名 ，-e MYSQL_ROOT_PASSWORD=root设置 账号为 root ，密码为 123456 ，</p>
+<p>  -d 表示作为一个守护进程在后台运行 ）</p>
+<h3 id="3-相关文件地址配置，可以在运行容器时设置："><a href="#3-相关文件地址配置，可以在运行容器时设置：" class="headerlink" title="3. 相关文件地址配置，可以在运行容器时设置："></a>3. 相关文件地址配置，可以在运行容器时设置：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD='password' -v $HOME/my:/etc/mysql/conf.d/ --name mysql  -d mysql</span><br></pre></td></tr></table></figure>
+
+<p>但要求对应路径对应文件已存在，才能成功挂载相内容到对应位置。</p>
+<blockquote>
+<p>-p 3306:3306：将容器的3306端口映射到主机的3306端口</p>
+<p>$HOME/my这个文件夹是存放my.cnf配置文件</p>
+<p>-e MYSQL_ROOT_PASSWORD=root：初始化root用户的密码</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/" data-id="ckcqayu8n0001u4v1fvop8ju0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-win10下的wsl1升级为wsl2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/16/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/" class="article-date">
@@ -97,20 +151,39 @@
 </ul>
 <ul>
 <li><p>在启用或者关闭Windows功能中打开虚拟机平台</p>
-<p>或者可以通过下面的命令来打开虚拟机平台 ，然后重启电脑</p>
+<p>或者可以通过下面的命令来打开虚拟机平台 ，然后<strong>重启电脑</strong>完成WSL安装并更新到WSL2</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart</span><br></pre></td></tr></table></figure>
-
 
 
 </li>
 </ul>
+<p><strong>由于个人已经在WSL1上安装了Ubuntu-18.04，接下来用下面的命令将该版本设置到WSL2上：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wls --set-version Ubuntu-18.04 2</span><br></pre></td></tr></table></figure>
+
+<p>运行该命令后，可能会看到以下消息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WSL 2 requires an update to its kernel component. For information please visit https:&#x2F;&#x2F;aka.ms&#x2F;wsl2kernel</span><br></pre></td></tr></table></figure>
+
+<p>那么访问该链接：<a href="https://aka.ms/wsl2kernel按照其中步骤来处理。" target="_blank" rel="noopener">https://aka.ms/wsl2kernel按照其中步骤来处理。</a></p>
+<p>待安装好wsl2 linux内核后，再次执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wls --set-version Ubuntu-18.04 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="将WSL2设置为默认版本"><a href="#将WSL2设置为默认版本" class="headerlink" title="将WSL2设置为默认版本"></a>将WSL2设置为默认版本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="查看已安装的linux分发版的WSL的版本："><a href="#查看已安装的linux分发版的WSL的版本：" class="headerlink" title="查看已安装的linux分发版的WSL的版本："></a>查看已安装的linux分发版的WSL的版本：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl -l -v</span><br></pre></td></tr></table></figure>
+
+<p>若要将分发版设置为受某一 WSL 版本支持，请运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --set-version &lt;distribution name&gt; &lt;versionNumber&gt;</span><br></pre></td></tr></table></figure>
+
+<p>请确保将 <code>&lt;distribution name&gt;</code> 替换为你的分发版的实际名称，并将 <code>&lt;versionNumber&gt;</code> 替换为数字“1”或“2”。 可以随时更改回 WSL 1，方法是运行与上面相同的命令，但将“2”替换为“1”</p>
 <p>具体参考教程地址：</p>
 <p><a href="https://docs.microsoft.com/zh-cn/windows/wsl/install-win10#update-to-wsl-2" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/windows/wsl/install-win10#update-to-wsl-2</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/16/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/" data-id="ckcox3xa90000rov13zy3cvd6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/16/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/" data-id="ckcqayu8j0000u4v18el67q70" class="article-share-link">Share</a>
       
       
     </footer>
@@ -168,7 +241,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/15/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85docker/" data-id="ckcoujy1q0000ywv115pn6k9k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/15/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85docker/" data-id="ckcqayu8p0002u4v1bihc9kjq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
@@ -228,7 +301,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/09/unbutu%E4%B8%8B%E7%BC%96%E8%AF%91openjdk13/" data-id="ckcotuz0m0000pcv1cq1v0q8y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/09/unbutu%E4%B8%8B%E7%BC%96%E8%AF%91openjdk13/" data-id="ckcqayu8t0007u4v15ag93k8x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
@@ -256,7 +329,7 @@
 <div class="article-gallery">
   <div class="article-gallery-photos">
     
-      <a class="article-gallery-img fancybox" href="http://wx3.sinaimg.cn/mw600/44f2ef1bgy1ggbmv9x6a1j20u011i42c.jpg" target="_blank" rel="gallery_ckc3eggva0000w8v11dz6dmhf noopener">
+      <a class="article-gallery-img fancybox" href="http://wx3.sinaimg.cn/mw600/44f2ef1bgy1ggbmv9x6a1j20u011i42c.jpg" target="_blank" rel="gallery_ckcqayu8p0003u4v11bf41wic noopener">
         <img src="http://wx3.sinaimg.cn/mw600/44f2ef1bgy1ggbmv9x6a1j20u011i42c.jpg" itemprop="image">
       </a>
     
@@ -285,7 +358,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/01/laomadeup-helloworld/" data-id="ckc3eggva0000w8v11dz6dmhf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/01/laomadeup-helloworld/" data-id="ckcqayu8p0003u4v11bf41wic" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/log/" rel="tag">log</a></li></ul>
@@ -336,7 +409,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/01/hello-world/" data-id="ckc3dfiw80000egv17a977uxf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/01/hello-world/" data-id="ckcqayu8s0005u4v17ynk7zl3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -398,6 +471,10 @@
       <ul>
         
           <li>
+            <a href="/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/">docker下运行mysql</a>
+          </li>
+        
+          <li>
             <a href="/2020/07/16/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/">win10下的wsl1升级为wsl2</a>
           </li>
         
@@ -411,10 +488,6 @@
         
           <li>
             <a href="/2020/07/01/laomadeup-helloworld/">hello world</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/01/hello-world/">Hello World</a>
           </li>
         
       </ul>
