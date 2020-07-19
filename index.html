@@ -64,6 +64,81 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-docker下安装fastdfs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/" class="article-date">
+  <time datetime="2020-07-19T01:48:17.218Z" itemprop="datePublished">2020-07-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/">docker下安装fastdfs</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">title: docker上安装与使用fastdfs</span><br><span class="line">date: 2020-07-19 21:21:07</span><br><span class="line">categories: </span><br><span class="line">- docker</span><br><span class="line">- fastdfs</span><br><span class="line">tags:</span><br><span class="line"> - docker</span><br><span class="line"> - fastdfs</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-docker拉取镜像"><a href="#1-docker拉取镜像" class="headerlink" title="1.docker拉取镜像"></a>1.docker拉取镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull morunchang/fastdfs</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-运行tracker"><a href="#2-运行tracker" class="headerlink" title="2. 运行tracker"></a>2. 运行tracker</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name tracker --net=host morunchang/fastdfs sh tracker.sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-运行storage"><a href="#3-运行storage" class="headerlink" title="3. 运行storage"></a>3. 运行storage</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name storage --net=host -e TRACKER_IP=172.30.32.1:22122 -e GROUP_NAME=group1 morunchang/fastdfs sh storage.sh</span><br><span class="line"></span><br><span class="line">docker run -d --name storage --net=host -e TRACKER_IP=192.168.5.137:22122 -e GROUP_NAME=group1 morunchang/fastdfs sh storage.sh</span><br><span class="line"></span><br><span class="line">docker run -d --name storage --net=host -e TRACKER_IP=172.30.39.172:22122 -e GROUP_NAME=group1 morunchang/fastdfs sh storage.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用的网络模式是-net=host,127.0.0.1是宿主机的IP</li>
+<li>group1是组名，即storage的组</li>
+<li>如果想要增加新的storage服务器，再次运行该命令，注意更换组名</li>
+</ul>
+<h3 id="4-设置容器开机启动"><a href="#4-设置容器开机启动" class="headerlink" title="4. 设置容器开机启动"></a>4. 设置容器开机启动</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker update --restart=always tracker</span><br><span class="line">docker update --restart=always storage</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-进入docker中的storage容器中"><a href="#5-进入docker中的storage容器中" class="headerlink" title="5.进入docker中的storage容器中"></a>5.进入docker中的storage容器中</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it storage /bin/bash</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>前面安装tracker与storage时候已经安装了nginx</li>
+</ul>
+<h3 id="6-查看nginx的配置"><a href="#6-查看nginx的配置" class="headerlink" title="6. 查看nginx的配置"></a>6. 查看nginx的配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/nginx/conf</span><br><span class="line">vi nginx.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200719154313392.png" alt="image-20200719154313392"></p>
+<p>上图配置如下：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> <span class="regexp">~ /M00</span>&#123;</span><br><span class="line">	<span class="attribute">root</span> /data/fast_data/data;</span><br><span class="line">	ngx_fastdfs_module;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>退出容器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exit</span><br></pre></td></tr></table></figure>
+
+<p>重启storage容器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart storage</span><br></pre></td></tr></table></figure>
+
+<p>查看启动容器  <code>docker ps</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">199b787fc342        morunchang/fastdfs   "sh storage.sh"          33 minutes ago      Up 33 minutes        storage</span><br><span class="line">6a3c6a3d57e8        morunchang/fastdfs   "sh tracker.sh"          About an hour ago   Up About an hour     tracker</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-查看storage的配置"><a href="#7-查看storage的配置" class="headerlink" title="7. 查看storage的配置"></a>7. 查看storage的配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">进入storage容器</span></span><br><span class="line">docker exec -it storage /bin/bash</span><br><span class="line"><span class="meta">#</span><span class="bash">进入fdfs目录</span></span><br><span class="line">cd /etc/fdfs</span><br><span class="line"><span class="meta">#</span><span class="bash">进入配置文件</span></span><br><span class="line">vi storage.conf</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/" data-id="ckct4u2wk00006gv14vre3pim" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-docker下运行mysql" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/" class="article-date">
@@ -471,6 +546,10 @@
       <ul>
         
           <li>
+            <a href="/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/">docker下安装fastdfs</a>
+          </li>
+        
+          <li>
             <a href="/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/">docker下运行mysql</a>
           </li>
         
@@ -484,10 +563,6 @@
         
           <li>
             <a href="/2020/07/09/unbutu%E4%B8%8B%E7%BC%96%E8%AF%91openjdk13/">unbutu下编译openjdk13</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/01/laomadeup-helloworld/">hello world</a>
           </li>
         
       </ul>
