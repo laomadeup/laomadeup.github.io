@@ -67,9 +67,13 @@
     <article id="post-docker下安装fastdfs" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/" class="article-date">
-  <time datetime="2020-07-19T01:48:17.218Z" itemprop="datePublished">2020-07-19</time>
+  <time datetime="2020-07-19T13:21:07.000Z" itemprop="datePublished">2020-07-19</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/docker/">docker</a>►<a class="article-category-link" href="/categories/docker/fastdfs/">fastdfs</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -78,7 +82,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/">docker下安装fastdfs</a>
+      <a class="article-title" href="/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/">docker上安装与使用fastdfs</a>
     </h1>
   
 
@@ -86,9 +90,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">title: docker上安装与使用fastdfs</span><br><span class="line">date: 2020-07-19 21:21:07</span><br><span class="line">categories: </span><br><span class="line">- docker</span><br><span class="line">- fastdfs</span><br><span class="line">tags:</span><br><span class="line"> - docker</span><br><span class="line"> - fastdfs</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-docker拉取镜像"><a href="#1-docker拉取镜像" class="headerlink" title="1.docker拉取镜像"></a>1.docker拉取镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull morunchang/fastdfs</span><br></pre></td></tr></table></figure>
+        <h3 id="1-docker拉取镜像"><a href="#1-docker拉取镜像" class="headerlink" title="1.docker拉取镜像"></a>1.docker拉取镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull morunchang/fastdfs</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-运行tracker"><a href="#2-运行tracker" class="headerlink" title="2. 运行tracker"></a>2. 运行tracker</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name tracker --net=host morunchang/fastdfs sh tracker.sh</span><br></pre></td></tr></table></figure>
 
@@ -112,6 +114,9 @@
 <p>上图配置如下：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> <span class="regexp">~ /M00</span>&#123;</span><br><span class="line">	<span class="attribute">root</span> /data/fast_data/data;</span><br><span class="line">	ngx_fastdfs_module;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>增加禁止缓存：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">add_header</span> Cache-Control <span class="literal">no</span>-store;</span><br></pre></td></tr></table></figure>
+
 <p>退出容器：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exit</span><br></pre></td></tr></table></figure>
 
@@ -132,60 +137,8 @@
       <a data-url="http://yoursite.com/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/" data-id="ckct4u2wk00006gv14vre3pim" class="article-share-link">Share</a>
       
       
-    </footer>
-  </div>
-  
-</article>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fastdfs/" rel="tag">fastdfs</a></li></ul>
 
-
-  
-    <article id="post-docker下运行mysql" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/" class="article-date">
-  <time datetime="2020-07-17T12:11:52.385Z" itemprop="datePublished">2020-07-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/">docker下运行mysql</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">title: docker上运行MySQL</span><br><span class="line">date: 2020-07-15 21:21:07</span><br><span class="line">categories: </span><br><span class="line">- docker</span><br><span class="line">- mysql</span><br><span class="line">tags:</span><br><span class="line"> - docker</span><br><span class="line"> - mysql</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-docker上安装MySQL"><a href="#1-docker上安装MySQL" class="headerlink" title="1. docker上安装MySQL"></a>1. docker上安装MySQL</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql:latest</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-docker-上启动MySQL，MySQL服务一直运行"><a href="#2-docker-上启动MySQL，MySQL服务一直运行" class="headerlink" title="2. docker 上启动MySQL，MySQL服务一直运行"></a>2. docker 上启动MySQL，MySQL服务一直运行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 --name docker_mysql -e MYSQL_ROOT_PASSWORD=root -d mysql</span><br></pre></td></tr></table></figure>
-
-<p>（参数 -p 设置端口，–name 取名 ，-e MYSQL_ROOT_PASSWORD=root设置 账号为 root ，密码为 123456 ，</p>
-<p>  -d 表示作为一个守护进程在后台运行 ）</p>
-<h3 id="3-相关文件地址配置，可以在运行容器时设置："><a href="#3-相关文件地址配置，可以在运行容器时设置：" class="headerlink" title="3. 相关文件地址配置，可以在运行容器时设置："></a>3. 相关文件地址配置，可以在运行容器时设置：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD='password' -v $HOME/my:/etc/mysql/conf.d/ --name mysql  -d mysql</span><br></pre></td></tr></table></figure>
-
-<p>但要求对应路径对应文件已存在，才能成功挂载相内容到对应位置。</p>
-<blockquote>
-<p>-p 3306:3306：将容器的3306端口映射到主机的3306端口</p>
-<p>$HOME/my这个文件夹是存放my.cnf配置文件</p>
-<p>-e MYSQL_ROOT_PASSWORD=root：初始化root用户的密码</p>
-</blockquote>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/" data-id="ckcqayu8n0001u4v1fvop8ju0" class="article-share-link">Share</a>
-      
-      
     </footer>
   </div>
   
@@ -195,8 +148,8 @@
   
     <article id="post-win10下的wsl1升级为wsl2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/07/16/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/" class="article-date">
-  <time datetime="2020-07-16T14:55:50.521Z" itemprop="datePublished">2020-07-16</time>
+    <a href="/2020/07/15/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/" class="article-date">
+  <time datetime="2020-07-15T13:21:07.000Z" itemprop="datePublished">2020-07-15</time>
 </a>
     
   </div>
@@ -207,7 +160,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/16/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/">win10下的wsl1升级为wsl2</a>
+      <a class="article-title" href="/2020/07/15/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/">win10下的wsl1升级为wsl2</a>
     </h1>
   
 
@@ -215,11 +168,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">title: win10下的wsl1升级为wsl2</span><br><span class="line">date: 2020-07-15 21:21:07</span><br><span class="line">tags:</span><br><span class="line"> - windows10</span><br><span class="line"> - wsl1</span><br><span class="line"> - wsl2</span><br><span class="line"> - ubuntu</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="wsl1更新到wsl2的前置条件"><a href="#wsl1更新到wsl2的前置条件" class="headerlink" title="wsl1更新到wsl2的前置条件"></a>wsl1更新到wsl2的前置条件</h3><ul>
+        <h3 id="wsl1更新到wsl2的前置条件"><a href="#wsl1更新到wsl2的前置条件" class="headerlink" title="wsl1更新到wsl2的前置条件"></a>wsl1更新到wsl2的前置条件</h3><ul>
 <li><p>win10的版本已经更新到2004版本，内部版本为19041或者更高</p>
 <p>windows徽标键+R，输入winver，确定，可以查看Windows内部版本</p>
 </li>
@@ -240,7 +189,7 @@
 
 <p>那么访问该链接：<a href="https://aka.ms/wsl2kernel按照其中步骤来处理。" target="_blank" rel="noopener">https://aka.ms/wsl2kernel按照其中步骤来处理。</a></p>
 <p>待安装好wsl2 linux内核后，再次执行命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wls --set-version Ubuntu-18.04 2</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --set-version Ubuntu-18.04 2</span><br></pre></td></tr></table></figure>
 
 <h3 id="将WSL2设置为默认版本"><a href="#将WSL2设置为默认版本" class="headerlink" title="将WSL2设置为默认版本"></a>将WSL2设置为默认版本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure>
 
@@ -258,9 +207,69 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/16/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/" data-id="ckcqayu8j0000u4v18el67q70" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/15/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/" data-id="ckcqayu8j0000u4v18el67q70" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows10/" rel="tag">windows10</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wsl1/" rel="tag">wsl1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wsl2/" rel="tag">wsl2</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-docker下运行mysql" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/15/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/" class="article-date">
+  <time datetime="2020-07-15T13:21:07.000Z" itemprop="datePublished">2020-07-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/docker/">docker</a>►<a class="article-category-link" href="/categories/docker/mysql/">mysql</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/15/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/">docker上运行MySQL</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-docker上安装MySQL"><a href="#1-docker上安装MySQL" class="headerlink" title="1. docker上安装MySQL"></a>1. docker上安装MySQL</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql:latest</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-docker-上启动MySQL，MySQL服务一直运行"><a href="#2-docker-上启动MySQL，MySQL服务一直运行" class="headerlink" title="2. docker 上启动MySQL，MySQL服务一直运行"></a>2. docker 上启动MySQL，MySQL服务一直运行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 --name docker_mysql -e MYSQL_ROOT_PASSWORD=root -d mysql</span><br></pre></td></tr></table></figure>
+
+<p>（参数 -p 设置端口，–name 取名 ，-e MYSQL_ROOT_PASSWORD=root设置 账号为 root ，密码为 123456 ，</p>
+<p>  -d 表示作为一个守护进程在后台运行 ）</p>
+<h3 id="3-相关文件地址配置，可以在运行容器时设置："><a href="#3-相关文件地址配置，可以在运行容器时设置：" class="headerlink" title="3. 相关文件地址配置，可以在运行容器时设置："></a>3. 相关文件地址配置，可以在运行容器时设置：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD='password' -v $HOME/my:/etc/mysql/conf.d/ --name mysql  -d mysql</span><br></pre></td></tr></table></figure>
+
+<p>但要求对应路径对应文件已存在，才能成功挂载相内容到对应位置。</p>
+<blockquote>
+<p>-p 3306:3306：将容器的3306端口映射到主机的3306端口</p>
+<p>$HOME/my这个文件夹是存放my.cnf配置文件</p>
+<p>-e MYSQL_ROOT_PASSWORD=root：初始化root用户的密码</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/15/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/" data-id="ckcqayu8n0001u4v1fvop8ju0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
+
     </footer>
   </div>
   
@@ -504,7 +513,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/docker/fastdfs/">fastdfs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li></ul>
     </div>
   </div>
 
@@ -514,7 +523,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/log/" rel="tag">log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastdfs/" rel="tag">fastdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/log/" rel="tag">log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows10/" rel="tag">windows10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wsl1/" rel="tag">wsl1</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wsl2/" rel="tag">wsl2</a></li></ul>
     </div>
   </div>
 
@@ -524,7 +533,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a>
+      <a href="/tags/docker/" style="font-size: 20px;">docker</a> <a href="/tags/fastdfs/" style="font-size: 10px;">fastdfs</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/windows10/" style="font-size: 10px;">windows10</a> <a href="/tags/wsl1/" style="font-size: 10px;">wsl1</a> <a href="/tags/wsl2/" style="font-size: 10px;">wsl2</a>
     </div>
   </div>
 
@@ -546,15 +555,15 @@
       <ul>
         
           <li>
-            <a href="/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/">docker下安装fastdfs</a>
+            <a href="/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/">docker上安装与使用fastdfs</a>
           </li>
         
           <li>
-            <a href="/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/">docker下运行mysql</a>
+            <a href="/2020/07/15/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/">win10下的wsl1升级为wsl2</a>
           </li>
         
           <li>
-            <a href="/2020/07/16/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/">win10下的wsl1升级为wsl2</a>
+            <a href="/2020/07/15/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/">docker上运行MySQL</a>
           </li>
         
           <li>

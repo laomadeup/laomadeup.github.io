@@ -5,19 +5,21 @@
   
 
   
-  <title>docker下安装fastdfs | Hexo</title>
+  <title>docker上安装与使用fastdfs | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="12345678title: docker上安装与使用fastdfsdate: 2020-07-19 21:21:07categories: - docker- fastdfstags: - docker - fastdfs  1.docker拉取镜像1docker pull morunchang&#x2F;fastdfs  2. 运行tracker1docker run -d --name tracker">
+  <meta name="description" content="1.docker拉取镜像1docker pull morunchang&#x2F;fastdfs  2. 运行tracker1docker run -d --name tracker --net&#x3D;host morunchang&#x2F;fastdfs sh tracker.sh  3. 运行storage12345docker run -d --name storage --net&#x3D;host -e TRACKER_">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker下安装fastdfs">
+<meta property="og:title" content="docker上安装与使用fastdfs">
 <meta property="og:url" content="http://yoursite.com/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="12345678title: docker上安装与使用fastdfsdate: 2020-07-19 21:21:07categories: - docker- fastdfstags: - docker - fastdfs  1.docker拉取镜像1docker pull morunchang&#x2F;fastdfs  2. 运行tracker1docker run -d --name tracker">
+<meta property="og:description" content="1.docker拉取镜像1docker pull morunchang&#x2F;fastdfs  2. 运行tracker1docker run -d --name tracker --net&#x3D;host morunchang&#x2F;fastdfs sh tracker.sh  3. 运行storage12345docker run -d --name storage --net&#x3D;host -e TRACKER_">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200719154313392.png">
-<meta property="article:published_time" content="2020-07-19T01:48:17.218Z">
-<meta property="article:modified_time" content="2020-07-19T09:09:37.105Z">
+<meta property="article:published_time" content="2020-07-19T13:21:07.000Z">
+<meta property="article:modified_time" content="2020-07-20T13:35:25.766Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="fastdfs">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200719154313392.png">
   
@@ -71,9 +73,13 @@
         <section id="main"><article id="post-docker下安装fastdfs" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/" class="article-date">
-  <time datetime="2020-07-19T01:48:17.218Z" itemprop="datePublished">2020-07-19</time>
+  <time datetime="2020-07-19T13:21:07.000Z" itemprop="datePublished">2020-07-19</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/docker/">docker</a>►<a class="article-category-link" href="/categories/docker/fastdfs/">fastdfs</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -82,7 +88,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      docker下安装fastdfs
+      docker上安装与使用fastdfs
     </h1>
   
 
@@ -90,9 +96,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">title: docker上安装与使用fastdfs</span><br><span class="line">date: 2020-07-19 21:21:07</span><br><span class="line">categories: </span><br><span class="line">- docker</span><br><span class="line">- fastdfs</span><br><span class="line">tags:</span><br><span class="line"> - docker</span><br><span class="line"> - fastdfs</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-docker拉取镜像"><a href="#1-docker拉取镜像" class="headerlink" title="1.docker拉取镜像"></a>1.docker拉取镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull morunchang/fastdfs</span><br></pre></td></tr></table></figure>
+        <h3 id="1-docker拉取镜像"><a href="#1-docker拉取镜像" class="headerlink" title="1.docker拉取镜像"></a>1.docker拉取镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull morunchang/fastdfs</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-运行tracker"><a href="#2-运行tracker" class="headerlink" title="2. 运行tracker"></a>2. 运行tracker</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name tracker --net=host morunchang/fastdfs sh tracker.sh</span><br></pre></td></tr></table></figure>
 
@@ -116,6 +120,9 @@
 <p>上图配置如下：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> <span class="regexp">~ /M00</span>&#123;</span><br><span class="line">	<span class="attribute">root</span> /data/fast_data/data;</span><br><span class="line">	ngx_fastdfs_module;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>增加禁止缓存：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">add_header</span> Cache-Control <span class="literal">no</span>-store;</span><br></pre></td></tr></table></figure>
+
 <p>退出容器：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exit</span><br></pre></td></tr></table></figure>
 
@@ -136,6 +143,8 @@
       <a data-url="http://yoursite.com/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/" data-id="ckct4u2wk00006gv14vre3pim" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fastdfs/" rel="tag">fastdfs</a></li></ul>
+
     </footer>
   </div>
   
@@ -143,9 +152,9 @@
 <nav id="article-nav">
   
   
-    <a href="/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/07/15/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">docker下运行mysql</div>
+      <div class="article-nav-title">win10下的wsl1升级为wsl2</div>
     </a>
   
 </nav>
@@ -161,7 +170,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/docker/fastdfs/">fastdfs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/mysql/">mysql</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li></ul>
     </div>
   </div>
 
@@ -171,7 +180,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/log/" rel="tag">log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastdfs/" rel="tag">fastdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/log/" rel="tag">log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows10/" rel="tag">windows10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wsl1/" rel="tag">wsl1</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wsl2/" rel="tag">wsl2</a></li></ul>
     </div>
   </div>
 
@@ -181,7 +190,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a>
+      <a href="/tags/docker/" style="font-size: 20px;">docker</a> <a href="/tags/fastdfs/" style="font-size: 10px;">fastdfs</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/windows10/" style="font-size: 10px;">windows10</a> <a href="/tags/wsl1/" style="font-size: 10px;">wsl1</a> <a href="/tags/wsl2/" style="font-size: 10px;">wsl2</a>
     </div>
   </div>
 
@@ -203,15 +212,15 @@
       <ul>
         
           <li>
-            <a href="/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/">docker下安装fastdfs</a>
+            <a href="/2020/07/19/docker%E4%B8%8B%E5%AE%89%E8%A3%85fastdfs/">docker上安装与使用fastdfs</a>
           </li>
         
           <li>
-            <a href="/2020/07/17/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/">docker下运行mysql</a>
+            <a href="/2020/07/15/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/">win10下的wsl1升级为wsl2</a>
           </li>
         
           <li>
-            <a href="/2020/07/16/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/">win10下的wsl1升级为wsl2</a>
+            <a href="/2020/07/15/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/">docker上运行MySQL</a>
           </li>
         
           <li>
