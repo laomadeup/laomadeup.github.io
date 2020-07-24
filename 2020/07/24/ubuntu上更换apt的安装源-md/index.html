@@ -5,19 +5,18 @@
   
 
   
-  <title>docker上运行MySQL | Hexo</title>
+  <title>ubuntu上更换apt的安装源.md | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. docker上安装MySQL1docker pull mysql:latest    2. docker 上启动MySQL，MySQL服务一直运行1docker run -p 3306:3306 --name docker_mysql -e MYSQL_ROOT_PASSWORD&#x3D;root -d mysql  （参数 -p 设置端口，–name 取名 ，-e MYSQL_ROOT_PASSW">
+  <meta name="description" content="Ubuntu默认的一些源在国内无法访问，切换为阿里云的速度更快： 1234567891011121314151617181920212223242526修改阿里源为Ubuntu 18.04默认的源备份&#x2F;etc&#x2F;apt&#x2F;sources.list#备份cp &#x2F;etc&#x2F;apt&#x2F;sources.list &#x2F;etc&#x2F;apt&#x2F;sources.list.bak#打开并编辑sources.list文件vi &#x2F;et">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker上运行MySQL">
-<meta property="og:url" content="http://yoursite.com/2020/07/15/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/index.html">
+<meta property="og:title" content="ubuntu上更换apt的安装源.md">
+<meta property="og:url" content="http://yoursite.com/2020/07/24/ubuntu%E4%B8%8A%E6%9B%B4%E6%8D%A2apt%E7%9A%84%E5%AE%89%E8%A3%85%E6%BA%90-md/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. docker上安装MySQL1docker pull mysql:latest    2. docker 上启动MySQL，MySQL服务一直运行1docker run -p 3306:3306 --name docker_mysql -e MYSQL_ROOT_PASSWORD&#x3D;root -d mysql  （参数 -p 设置端口，–name 取名 ，-e MYSQL_ROOT_PASSW">
+<meta property="og:description" content="Ubuntu默认的一些源在国内无法访问，切换为阿里云的速度更快： 1234567891011121314151617181920212223242526修改阿里源为Ubuntu 18.04默认的源备份&#x2F;etc&#x2F;apt&#x2F;sources.list#备份cp &#x2F;etc&#x2F;apt&#x2F;sources.list &#x2F;etc&#x2F;apt&#x2F;sources.list.bak#打开并编辑sources.list文件vi &#x2F;et">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-07-15T13:21:07.000Z">
-<meta property="article:modified_time" content="2020-07-20T12:09:33.528Z">
+<meta property="article:published_time" content="2020-07-24T12:46:37.000Z">
+<meta property="article:modified_time" content="2020-07-24T13:21:28.602Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="docker">
 <meta property="article:tag" content="ubuntu">
 <meta name="twitter:card" content="summary">
   
@@ -68,16 +67,12 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-docker下运行mysql" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-ubuntu上更换apt的安装源-md" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/07/15/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/" class="article-date">
-  <time datetime="2020-07-15T13:21:07.000Z" itemprop="datePublished">2020-07-15</time>
+    <a href="/2020/07/24/ubuntu%E4%B8%8A%E6%9B%B4%E6%8D%A2apt%E7%9A%84%E5%AE%89%E8%A3%85%E6%BA%90-md/" class="article-date">
+  <time datetime="2020-07-24T12:46:37.000Z" itemprop="datePublished">2020-07-24</time>
 </a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/docker/">docker</a>►<a class="article-category-link" href="/categories/docker/mysql/">mysql</a>
-  </div>
-
   </div>
   <div class="article-inner">
     
@@ -86,7 +81,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      docker上运行MySQL
+      ubuntu上更换apt的安装源.md
     </h1>
   
 
@@ -94,30 +89,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-docker上安装MySQL"><a href="#1-docker上安装MySQL" class="headerlink" title="1. docker上安装MySQL"></a>1. docker上安装MySQL</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql:latest</span><br></pre></td></tr></table></figure>
+        <p>Ubuntu默认的一些源在国内无法访问，切换为阿里云的速度更快：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">修改阿里源为Ubuntu</span> <span class="string">18.04默认的源</span></span><br><span class="line"></span><br><span class="line"><span class="attr">备份/etc/apt/sources.list</span></span><br><span class="line"><span class="comment">#备份</span></span><br><span class="line"><span class="attr">cp</span> <span class="string">/etc/apt/sources.list /etc/apt/sources.list.bak</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#打开并编辑sources.list文件</span></span><br><span class="line"><span class="attr">vi</span> <span class="string">/etc/apt/source.list</span></span><br><span class="line"><span class="attr">v</span></span><br><span class="line"><span class="attr">在/etc/apt/sources.list文件前面添加如下条目</span></span><br><span class="line"><span class="comment">#添加阿里源</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line"><span class="attr">最后执行如下命令更新源</span></span><br><span class="line"><span class="comment">##更新</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">apt-get update</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">apt-get upgrade</span></span><br></pre></td></tr></table></figure>
 
-
-
-<h3 id="2-docker-上启动MySQL，MySQL服务一直运行"><a href="#2-docker-上启动MySQL，MySQL服务一直运行" class="headerlink" title="2. docker 上启动MySQL，MySQL服务一直运行"></a>2. docker 上启动MySQL，MySQL服务一直运行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 --name docker_mysql -e MYSQL_ROOT_PASSWORD=root -d mysql</span><br></pre></td></tr></table></figure>
-
-<p>（参数 -p 设置端口，–name 取名 ，-e MYSQL_ROOT_PASSWORD=root设置 账号为 root ，密码为 123456 ，</p>
-<p>  -d 表示作为一个守护进程在后台运行 ）</p>
-<h3 id="3-相关文件地址配置，可以在运行容器时设置："><a href="#3-相关文件地址配置，可以在运行容器时设置：" class="headerlink" title="3. 相关文件地址配置，可以在运行容器时设置："></a>3. 相关文件地址配置，可以在运行容器时设置：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD='password' -v $HOME/my:/etc/mysql/conf.d/ --name mysql  -d mysql</span><br></pre></td></tr></table></figure>
-
-<p>但要求对应路径对应文件已存在，才能成功挂载相内容到对应位置。</p>
-<blockquote>
-<p>-p 3306:3306：将容器的3306端口映射到主机的3306端口</p>
-<p>$HOME/my这个文件夹是存放my.cnf配置文件</p>
-<p>-e MYSQL_ROOT_PASSWORD=root：初始化root用户的密码</p>
-</blockquote>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/15/docker%E4%B8%8B%E8%BF%90%E8%A1%8Cmysql/" data-id="ckcqayu8n0001u4v1fvop8ju0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/24/ubuntu%E4%B8%8A%E6%9B%B4%E6%8D%A2apt%E7%9A%84%E5%AE%89%E8%A3%85%E6%BA%90-md/" data-id="ckd098hou0000e8v1b5yh2zxl" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
 
     </footer>
   </div>
@@ -125,19 +107,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2020/07/15/win10%E4%B8%8B%E7%9A%84wsl1%E5%8D%87%E7%BA%A7%E4%B8%BAwsl2/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85lua-md/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          win10下的wsl1升级为wsl2
+          ubuntu上安装lua.md
         
       </div>
     </a>
   
   
-    <a href="/2020/07/15/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85docker/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85gcc-md/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">win10子系统上的ubuntu上安装docker</div>
+      <div class="article-nav-title">ubuntu上安装gcc.md</div>
     </a>
   
 </nav>
