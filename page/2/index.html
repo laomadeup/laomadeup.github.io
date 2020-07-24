@@ -64,6 +64,126 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-ubuntu上安装docker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/15/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85docker/" class="article-date">
+  <time datetime="2020-07-15T13:21:07.000Z" itemprop="datePublished">2020-07-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/15/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85docker/">win10子系统上的ubuntu上安装docker</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-更换国内软件源，推荐中国科技大学的源，稳定速度较快。"><a href="#1-更换国内软件源，推荐中国科技大学的源，稳定速度较快。" class="headerlink" title="1 更换国内软件源，推荐中国科技大学的源，稳定速度较快。"></a>1 更换国内软件源，推荐中国科技大学的源，稳定速度较快。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line"></span><br><span class="line">sudo sed -i 's/archive.ubuntu.com/mirrors.ustc.edu.cn/g' /etc/apt/sources.list</span><br><span class="line"></span><br><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-安装需要的包"><a href="#2-安装需要的包" class="headerlink" title="2 安装需要的包"></a>2 安装需要的包</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install apt-transport-https ca-certificates software-properties-common curl</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-添加GPG密钥，并添加Docker-ce软件源，这里还是以中国科技大学的Docker-ce源为例："><a href="#3-添加GPG密钥，并添加Docker-ce软件源，这里还是以中国科技大学的Docker-ce源为例：" class="headerlink" title="3 添加GPG密钥，并添加Docker-ce软件源，这里还是以中国科技大学的Docker-ce源为例："></a>3 添加GPG密钥，并添加Docker-ce软件源，这里还是以中国科技大学的Docker-ce源为例：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">sudo add-apt-repository "deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu \</span><br><span class="line"><span class="meta">$</span><span class="bash">(lsb_release -cs) stable<span class="string">"</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-添加成功后更新软件包缓存"><a href="#4-添加成功后更新软件包缓存" class="headerlink" title="4 添加成功后更新软件包缓存"></a>4 添加成功后更新软件包缓存</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="5-安装-Docker-ce"><a href="#5-安装-Docker-ce" class="headerlink" title="5 安装 Docker-ce"></a>5 安装 Docker-ce</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install docker-ce</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-设置开机自启动并启动-Docker-ce（安装成功后默认已设置并启动，可忽略）"><a href="#6-设置开机自启动并启动-Docker-ce（安装成功后默认已设置并启动，可忽略）" class="headerlink" title="6.设置开机自启动并启动 Docker-ce（安装成功后默认已设置并启动，可忽略）"></a>6.设置开机自启动并启动 Docker-ce（安装成功后默认已设置并启动，可忽略）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable docker</span><br><span class="line">sudo systemctl start docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-测试运行"><a href="#7-测试运行" class="headerlink" title="7.测试运行"></a>7.测试运行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run hello-world</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-添加当前用户到-docker-用户组，可以不用-sudo-运行-docker（可选）"><a href="#8-添加当前用户到-docker-用户组，可以不用-sudo-运行-docker（可选）" class="headerlink" title="8.添加当前用户到 docker 用户组，可以不用 sudo 运行 docker（可选）"></a>8.添加当前用户到 docker 用户组，可以不用 sudo 运行 docker（可选）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo groupadd docker</span><br><span class="line">sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-测试添加用户组（可选）"><a href="#9-测试添加用户组（可选）" class="headerlink" title="9.测试添加用户组（可选）"></a>9.测试添加用户组（可选）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/15/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85docker/" data-id="ckcqayu8p0002u4v1bihc9kjq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-unbutu下编译openjdk13" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/09/unbutu%E4%B8%8B%E7%BC%96%E8%AF%91openjdk13/" class="article-date">
+  <time datetime="2020-07-09T13:28:15.000Z" itemprop="datePublished">2020-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/09/unbutu%E4%B8%8B%E7%BC%96%E8%AF%91openjdk13/">unbutu下编译openjdk13</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>安装GCC；</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li><p>更新包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="3">
+<li><p>安装openJDK编译的依赖库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libfreetype6-dev libcups2-dev libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev libasound2-dev libffi-dev autoconf libfontconfig1-dev</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/09/unbutu%E4%B8%8B%E7%BC%96%E8%AF%91openjdk13/" data-id="ckcqayu8t0007u4v15ag93k8x" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="页面布局（配合主题文档使用）-laomadeup-helloworld" class="article article-type-页面布局（配合主题文档使用）" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/07/01/laomadeup-helloworld/" class="article-date">
@@ -195,7 +315,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastdfs/" rel="tag">fastdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hyper-v/" rel="tag">hyper-v</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/" rel="tag">idea</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/log/" rel="tag">log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/port/" rel="tag">port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/win10/" rel="tag">win10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows10/" rel="tag">windows10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wsl1/" rel="tag">wsl1</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wsl2/" rel="tag">wsl2</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fastdfs/" rel="tag">fastdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/" rel="tag">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hyper-v/" rel="tag">hyper-v</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/" rel="tag">idea</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/log/" rel="tag">log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openresty/" rel="tag">openresty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/port/" rel="tag">port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/win10/" rel="tag">win10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows10/" rel="tag">windows10</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wsl/" rel="tag">wsl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wsl1/" rel="tag">wsl1</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wsl2/" rel="tag">wsl2</a></li></ul>
     </div>
   </div>
 
@@ -205,7 +325,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/fastdfs/" style="font-size: 10px;">fastdfs</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hyper-v/" style="font-size: 10px;">hyper-v</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/win10/" style="font-size: 10px;">win10</a> <a href="/tags/windows10/" style="font-size: 10px;">windows10</a> <a href="/tags/wsl1/" style="font-size: 10px;">wsl1</a> <a href="/tags/wsl2/" style="font-size: 10px;">wsl2</a>
+      <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/fastdfs/" style="font-size: 10px;">fastdfs</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hyper-v/" style="font-size: 10px;">hyper-v</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/openresty/" style="font-size: 10px;">openresty</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/win10/" style="font-size: 10px;">win10</a> <a href="/tags/windows10/" style="font-size: 10px;">windows10</a> <a href="/tags/wsl/" style="font-size: 10px;">wsl</a> <a href="/tags/wsl1/" style="font-size: 10px;">wsl1</a> <a href="/tags/wsl2/" style="font-size: 10px;">wsl2</a>
     </div>
   </div>
 
@@ -227,6 +347,14 @@
       <ul>
         
           <li>
+            <a href="/2020/07/24/win10%E6%9C%AC%E6%9C%BA%E4%B8%8A%E6%9F%A5%E7%9C%8Bwsd2%E4%B8%8A%E7%9A%84ip%E5%9C%B0%E5%9D%80-md/">win10本机上查看wsd2上的ip地址.md</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85openresty-md/">ubuntu上安装openresty.md</a>
+          </li>
+        
+          <li>
             <a href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85lua-md/">ubuntu上安装lua.md</a>
           </li>
         
@@ -236,14 +364,6 @@
         
           <li>
             <a href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85gcc-md/">ubuntu上安装gcc.md</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/21/idea%E9%93%BE%E6%8E%A5github%E6%8F%90%E7%A4%BAInvalid%20authentidcation%20data/">idea链接github提示Invalid authentidcation data</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/21/win10%E5%BC%80%E5%90%AFhyper-v%E5%90%8E%EF%BC%8C%E7%B3%BB%E7%BB%9F%E4%BF%9D%E7%95%99%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%AF%BC%E8%87%B4%E7%AB%AF%E5%8F%A3%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8/">win10开启hyper-v后，系统保留的端口导致端口无法使用</a>
           </li>
         
       </ul>
