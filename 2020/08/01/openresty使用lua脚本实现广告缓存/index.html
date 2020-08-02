@@ -5,15 +5,32 @@
   
 
   
-  <title>Hexo</title>
+  <title>openresty使用lua脚本实现广告缓存.md | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="1.nginx配置缓存1lua_shared_dict dis_cache 128m;   2. 在nginx中配置请求路径对应的lua处理脚本123location &#x2F;read_content &amp;#123;     content_by_lua_file &#x2F;home&#x2F;laoma&#x2F;lua&#x2F;read_content.lua;&amp;#125;   3.lua脚本在&#x2F;home&#x2F;laoma&#x2F;lua目录下创建r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="openresty使用lua脚本实现广告缓存.md">
+<meta property="og:url" content="http://yoursite.com/2020/08/01/openresty%E4%BD%BF%E7%94%A8lua%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E5%B9%BF%E5%91%8A%E7%BC%93%E5%AD%98/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.nginx配置缓存1lua_shared_dict dis_cache 128m;   2. 在nginx中配置请求路径对应的lua处理脚本123location &#x2F;read_content &amp;#123;     content_by_lua_file &#x2F;home&#x2F;laoma&#x2F;lua&#x2F;read_content.lua;&amp;#125;   3.lua脚本在&#x2F;home&#x2F;laoma&#x2F;lua目录下创建r">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200801122912131.png">
+<meta property="og:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200801122932276.png">
+<meta property="og:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200802102308514.png">
+<meta property="og:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200802102321783.png">
+<meta property="og:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200802102616736.png">
+<meta property="og:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200801214052592.png">
+<meta property="og:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200801214559422.png">
+<meta property="og:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200801214755439.png">
+<meta property="og:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200801214813152.png">
+<meta property="og:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200801215825276.png">
+<meta property="article:published_time" content="2020-08-01T04:10:36.000Z">
+<meta property="article:modified_time" content="2020-08-02T05:48:12.876Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="openresty">
+<meta property="article:tag" content="lua">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200801122912131.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -62,9 +79,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-openresty使用lua脚本实现广告缓存" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-openresty使用lua脚本实现广告缓存" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/08/01/openresty%E4%BD%BF%E7%94%A8lua%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E5%B9%BF%E5%91%8A%E7%BC%93%E5%AD%98/" class="article-date">
   <time datetime="2020-08-01T04:10:36.000Z" itemprop="datePublished">2020-08-01</time>
@@ -77,8 +92,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/01/openresty%E4%BD%BF%E7%94%A8lua%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E5%B9%BF%E5%91%8A%E7%BC%93%E5%AD%98/">openresty使用lua脚本实现广告缓存.md</a>
+    <h1 class="article-title" itemprop="name">
+      openresty使用lua脚本实现广告缓存.md
     </h1>
   
 
@@ -156,412 +171,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-docker运行redis" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/28/docker%E8%BF%90%E8%A1%8Credis/" class="article-date">
-  <time datetime="2020-07-28T13:32:42.000Z" itemprop="datePublished">2020-07-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/28/docker%E8%BF%90%E8%A1%8Credis/">docker运行redis.md</a>
-    </h1>
+    <a href="/2020/07/28/docker%E8%BF%90%E8%A1%8Credis/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">docker运行redis.md</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h6 id="1-docker运行redis"><a href="#1-docker运行redis" class="headerlink" title="1. docker运行redis"></a>1. docker运行redis</h6><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run <span class="literal">-p</span> <span class="number">6379</span>:<span class="number">6379</span> <span class="literal">-d</span> redis:latest redis<span class="literal">-server</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/28/docker%E8%BF%90%E8%A1%8Credis/" data-id="ckdd490cq0000hsv179xrf1dc" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/" rel="tag">redis</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-openresty测试广告图片的载入与读取" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/28/openresty%E6%B5%8B%E8%AF%95%E5%B9%BF%E5%91%8A%E5%9B%BE%E7%89%87%E7%9A%84%E8%BD%BD%E5%85%A5%E4%B8%8E%E8%AF%BB%E5%8F%96/" class="article-date">
-  <time datetime="2020-07-28T13:05:44.000Z" itemprop="datePublished">2020-07-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/28/openresty%E6%B5%8B%E8%AF%95%E5%B9%BF%E5%91%8A%E5%9B%BE%E7%89%87%E7%9A%84%E8%BD%BD%E5%85%A5%E4%B8%8E%E8%AF%BB%E5%8F%96/">openresty测试广告图片的载入与读取.md</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h6 id="1-创建目录-并在该目录下创建update-content-lua文件，目的是连接mysql数据库查询数据并存储到redis中"><a href="#1-创建目录-并在该目录下创建update-content-lua文件，目的是连接mysql数据库查询数据并存储到redis中" class="headerlink" title="1. 创建目录,并在该目录下创建update_content.lua文件，目的是连接mysql数据库查询数据并存储到redis中"></a>1. 创建目录,并在该目录下创建update_content.lua文件，目的是连接mysql数据库查询数据并存储到redis中</h6><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /home/laoma/lua</span><br><span class="line">cd lua</span><br><span class="line">vi update_content.lua</span><br></pre></td></tr></table></figure>
-
-<p>update_content.lua文件内容：</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">ngx.header.content_type=<span class="string">"application/json;charset=utf8"</span></span><br><span class="line"><span class="keyword">local</span> cjson = <span class="built_in">require</span>(<span class="string">"cjson"</span>)</span><br><span class="line"><span class="keyword">local</span> mysql = <span class="built_in">require</span>(<span class="string">"resty.mysql"</span>)</span><br><span class="line"><span class="keyword">local</span> uri_args = ngx.req.get_uri_args()</span><br><span class="line"><span class="keyword">local</span> id = uri_args[<span class="string">"id"</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> db = mysql:new()</span><br><span class="line">db:set_timeout(<span class="number">1000</span>)</span><br><span class="line"><span class="keyword">local</span> props = &#123;</span><br><span class="line">    host = <span class="string">"127.0.0.1"</span>,</span><br><span class="line">    port = <span class="number">3306</span>,</span><br><span class="line">    database = <span class="string">"loengmall_content"</span>,</span><br><span class="line">    user = <span class="string">"root"</span>,</span><br><span class="line">    password = <span class="string">"******"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> res = db:connect(props)</span><br><span class="line"><span class="keyword">local</span> select_sql = <span class="string">"select url,pic from tb_content where status ='1' and category_id="</span>..id..<span class="string">" order by sort_order"</span></span><br><span class="line">res = db:query(select_sql)</span><br><span class="line">db:<span class="built_in">close</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> redis = <span class="built_in">require</span>(<span class="string">"resty.redis"</span>)</span><br><span class="line"><span class="keyword">local</span> red = redis:new()</span><br><span class="line">red:set_timeout(<span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> ip =<span class="string">"127.0.0.1"</span></span><br><span class="line"><span class="keyword">local</span> port = <span class="number">6379</span></span><br><span class="line">red:connect(ip,port)</span><br><span class="line">red:set(<span class="string">"content_"</span>..id,cjson.encode(res))</span><br><span class="line">red:<span class="built_in">close</span>()</span><br><span class="line"></span><br><span class="line">ngx.say(<span class="string">"&#123;flag:true&#125;"</span>)</span><br></pre></td></tr></table></figure>
-
-<h6 id="2-修改-usr-local-openresty-nginx-conf-nginx-conf文件，添加头信息和location信息"><a href="#2-修改-usr-local-openresty-nginx-conf-nginx-conf文件，添加头信息和location信息" class="headerlink" title="2. 修改/usr/local/openresty/nginx/conf/nginx.conf文件，添加头信息和location信息"></a>2. 修改/usr/local/openresty/nginx/conf/nginx.conf文件，添加头信息和location信息</h6><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server</span> <span class="string">&#123;</span></span><br><span class="line">       <span class="attr">listen</span>       <span class="string">80;</span></span><br><span class="line">       <span class="attr">server_name</span>  <span class="string">localhost;</span></span><br><span class="line"></span><br><span class="line">       <span class="attr">location</span> <span class="string">/update_content &#123;</span></span><br><span class="line">               <span class="attr">content_by_lua_file</span> <span class="string">/home/laoma/lua/update_content.lua;</span></span><br><span class="line">       <span class="attr">&#125;</span></span><br><span class="line"> <span class="attr">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>切换到/sbin目录下，重启nginx，命令如下：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/openresty/nginx/sbin</span><br><span class="line">sudo ./nginx <span class="literal">-s</span> reload</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/28/openresty%E6%B5%8B%E8%AF%95%E5%B9%BF%E5%91%8A%E5%9B%BE%E7%89%87%E7%9A%84%E8%BD%BD%E5%85%A5%E4%B8%8E%E8%AF%BB%E5%8F%96/" data-id="ckdd490d20007hsv15454846g" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lua/" rel="tag">lua</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openresty/" rel="tag">openresty</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-win10-wsl2中使用图形界面-GUI-" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/26/win10-wsl2%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2-GUI-/" class="article-date">
-  <time datetime="2020-07-26T12:47:01.000Z" itemprop="datePublished">2020-07-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/26/win10-wsl2%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2-GUI-/">win10 wsl2中使用图形界面(GUI).md</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>参考下面的博客文章：</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">https</span>:<span class="string">//www.iamkyun.com/2020/07/25/WSL2-Ubuntu-GUI/</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/26/win10-wsl2%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2-GUI-/" data-id="ckdd490d10003hsv16ja98vrq" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gui/" rel="tag">gui</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/win10/" rel="tag">win10</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wsl2/" rel="tag">wsl2</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-win10本机上查看wsd2上的ip地址" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/24/win10%E6%9C%AC%E6%9C%BA%E4%B8%8A%E6%9F%A5%E7%9C%8Bwsd2%E4%B8%8A%E7%9A%84ip%E5%9C%B0%E5%9D%80/" class="article-date">
-  <time datetime="2020-07-24T14:45:50.000Z" itemprop="datePublished">2020-07-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/24/win10%E6%9C%AC%E6%9C%BA%E4%B8%8A%E6%9F%A5%E7%9C%8Bwsd2%E4%B8%8A%E7%9A%84ip%E5%9C%B0%E5%9D%80/">win10本机上查看wsd2上的ip地址.md</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>查看win10上的wsl2的ip地址命令:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr show eth0</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/24/win10%E6%9C%AC%E6%9C%BA%E4%B8%8A%E6%9F%A5%E7%9C%8Bwsd2%E4%B8%8A%E7%9A%84ip%E5%9C%B0%E5%9D%80/" data-id="ckdd490d6000jhsv15ya0gc3o" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wsl/" rel="tag">wsl</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ubuntu上安装openresty" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85openresty/" class="article-date">
-  <time datetime="2020-07-24T14:05:48.000Z" itemprop="datePublished">2020-07-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85openresty/">ubuntu上安装openresty.md</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>安装openresty命令如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">导入我们的 GPG 密钥：</span></span><br><span class="line">wget -qO - https://openresty.org/package/pubkey.gpg | sudo apt-key add -</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 安装 add-apt-repository 命令</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> （之后你可以删除这个包以及对应的关联包）</span></span><br><span class="line">sudo apt-get -y install software-properties-common</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 添加我们官方 official APT 仓库：</span></span><br><span class="line">sudo add-apt-repository -y "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main"</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 更新 APT 索引：</span></span><br><span class="line">sudo apt-get update</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">然后就可以像下面这样安装软件包，比如 openresty：</span></span><br><span class="line">sudo apt-get install openresty</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">启动openresty</span></span><br><span class="line">sudo /usr/local/openresty/nginx/sbin/nginx -c /usr/local/openresty/nginx/conf/nginx.conf</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">#可以通过下面的命令来查看nginx是否已经启动</span></span></span><br><span class="line">ps -ef|grep nginx</span><br></pre></td></tr></table></figure>
-
-<p>访问地址：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## ip地址, eth0:</span><br><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85openresty/" data-id="ckdd490d10005hsv1aekn6r58" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openresty/" rel="tag">openresty</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ubuntu上安装lua" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85lua/" class="article-date">
-  <time datetime="2020-07-24T12:54:59.000Z" itemprop="datePublished">2020-07-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85lua/">ubuntu上安装lua.md</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在ubuntu上安装lua执行以下命令：</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#下载lua</span></span><br><span class="line"></span><br><span class="line"><span class="attr">curl</span> <span class="string">-R -O http://www.lua.org/ftp/lua-5.3.5.tar.gz</span></span><br><span class="line"><span class="attr">tar</span> <span class="string">zxf lua-5.3.5.tar.gz</span></span><br><span class="line"><span class="attr">cd</span> <span class="string">lua-5.3.5</span></span><br><span class="line"></span><br><span class="line"><span class="attr">make</span> <span class="string">linux test</span></span><br></pre></td></tr></table></figure>
-
-<p>这时候可能会因为缺少libreadline-gplv2-dev依赖库导致以下错误</p>
-<p><img src="C:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200724205708628.png" alt="image-20200724205708628"></p>
-<p>安装libreadline-gplv2-dev依赖库：</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sudo</span> <span class="string">apt-get install libreadline-gplv2-dev</span></span><br></pre></td></tr></table></figure>
-
-<p>再次执行:</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">make</span> <span class="string">linux test</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">make install</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85lua/" data-id="ckd32yhlg00026sv13u2w1a8q" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ubuntu上更换apt的安装源" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/24/ubuntu%E4%B8%8A%E6%9B%B4%E6%8D%A2apt%E7%9A%84%E5%AE%89%E8%A3%85%E6%BA%90/" class="article-date">
-  <time datetime="2020-07-24T12:46:37.000Z" itemprop="datePublished">2020-07-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/24/ubuntu%E4%B8%8A%E6%9B%B4%E6%8D%A2apt%E7%9A%84%E5%AE%89%E8%A3%85%E6%BA%90/">ubuntu上更换apt的安装源.md</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Ubuntu默认的一些源在国内无法访问，切换为阿里云的速度更快：</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">修改阿里源为Ubuntu</span> <span class="string">18.04默认的源</span></span><br><span class="line"></span><br><span class="line"><span class="attr">备份/etc/apt/sources.list</span></span><br><span class="line"><span class="comment">#备份</span></span><br><span class="line"><span class="attr">cp</span> <span class="string">/etc/apt/sources.list /etc/apt/sources.list.bak</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#打开并编辑sources.list文件</span></span><br><span class="line"><span class="attr">vi</span> <span class="string">/etc/apt/source.list</span></span><br><span class="line"><span class="attr">v</span></span><br><span class="line"><span class="attr">在/etc/apt/sources.list文件前面添加如下条目</span></span><br><span class="line"><span class="comment">#添加阿里源</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line"><span class="attr">最后执行如下命令更新源</span></span><br><span class="line"><span class="comment">##更新</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">apt-get update</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">apt-get upgrade</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/24/ubuntu%E4%B8%8A%E6%9B%B4%E6%8D%A2apt%E7%9A%84%E5%AE%89%E8%A3%85%E6%BA%90/" data-id="ckdd490d6000ihsv19uoa5my0" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ubuntu上安装gcc" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85gcc/" class="article-date">
-  <time datetime="2020-07-24T12:41:51.000Z" itemprop="datePublished">2020-07-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85gcc/">ubuntu上安装gcc.md</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>输入下面的命令：</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sudo</span> <span class="string">apt install build-essential</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85gcc/" data-id="ckd32yhla00006sv1gbtjeui5" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-idea链接github提示Invalid authentidcation data" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/21/idea%E9%93%BE%E6%8E%A5github%E6%8F%90%E7%A4%BAInvalid%20authentidcation%20data/" class="article-date">
-  <time datetime="2020-07-21T15:21:07.000Z" itemprop="datePublished">2020-07-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/idea/">idea</a>►<a class="article-category-link" href="/categories/idea/github/">github</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/21/idea%E9%93%BE%E6%8E%A5github%E6%8F%90%E7%A4%BAInvalid%20authentidcation%20data/">idea链接github提示Invalid authentidcation data</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="https://img-blog.csdnimg.cn/20200427180105709.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hlaVNR,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h3 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h3><p>在Server加上https://</p>
-<p>也就是改成：<a href="https://github.com" target="_blank" rel="noopener">https://github.com</a></p>
-<h3 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h3><p>idea设置里搜索HTTP Proxy ，去掉代理就可以了<br><img src="https://img-blog.csdnimg.cn/20200427180537294.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0hlaVNR,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h3 id="方法三："><a href="#方法三：" class="headerlink" title="方法三："></a>方法三：</h3><p>将DNS改成阿里的DNS：233.5.5.5；若DNS已经是阿里的，改成动态获取DNS；</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/21/idea%E9%93%BE%E6%8E%A5github%E6%8F%90%E7%A4%BAInvalid%20authentidcation%20data/" data-id="ckcw2jtdd0000swv18wn52j1q" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/" rel="tag">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/idea/" rel="tag">idea</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-  </nav>
 
 </section>
         
