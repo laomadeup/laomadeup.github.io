@@ -7,15 +7,15 @@
   
   <title>docker上canal容器的安装 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="下载镜像： 1docker pull docker.io&#x2F;canal&#x2F;canal-server">
+  <meta name="description" content="下载镜像： 1docker pull docker.io&#x2F;canal&#x2F;canal-server  容器安装： 1docker run -p 11111:11111 --name canal -d docker.io&#x2F;canal&#x2F;canal-server">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker上canal容器的安装">
 <meta property="og:url" content="http://yoursite.com/2020/08/03/docker%E4%B8%8Acanal%E5%AE%B9%E5%99%A8%E7%9A%84%E5%AE%89%E8%A3%85/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="下载镜像： 1docker pull docker.io&#x2F;canal&#x2F;canal-server">
+<meta property="og:description" content="下载镜像： 1docker pull docker.io&#x2F;canal&#x2F;canal-server  容器安装： 1docker run -p 11111:11111 --name canal -d docker.io&#x2F;canal&#x2F;canal-server">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-03T14:03:30.000Z">
-<meta property="article:modified_time" content="2020-08-03T14:04:25.922Z">
+<meta property="article:modified_time" content="2020-08-03T15:09:16.837Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="canal">
@@ -91,7 +91,10 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>下载镜像：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull docker.io/canal/canal<span class="literal">-server</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">docker</span> <span class="string">pull docker.io/canal/canal-server</span></span><br></pre></td></tr></table></figure>
+
+<p>容器安装：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">docker</span> <span class="string">run -p 11111:11111 --name canal -d docker.io/canal/canal-server</span></span><br></pre></td></tr></table></figure>
 
 
       

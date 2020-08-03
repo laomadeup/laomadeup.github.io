@@ -87,7 +87,10 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>下载镜像：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull docker.io/canal/canal<span class="literal">-server</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">docker</span> <span class="string">pull docker.io/canal/canal-server</span></span><br></pre></td></tr></table></figure>
+
+<p>容器安装：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">docker</span> <span class="string">run -p 11111:11111 --name canal -d docker.io/canal/canal-server</span></span><br></pre></td></tr></table></figure>
 
 
       
