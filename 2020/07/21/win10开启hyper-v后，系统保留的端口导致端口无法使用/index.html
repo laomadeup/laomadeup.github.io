@@ -15,7 +15,7 @@
 <meta property="og:description" content="win10中开启hyper-v后，每重启一次，保留的端口都会改变，因此将保留端口指定到一定的范围：  Disable hyper-v (which will required a couple of restarts) 1dism.exe &#x2F;Online &#x2F;Disable-Feature:Microsoft-Hyper-V  When you finish all the required res">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-21T15:21:07.000Z">
-<meta property="article:modified_time" content="2020-08-02T06:07:07.015Z">
+<meta property="article:modified_time" content="2020-08-09T15:07:13.361Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="win10">
 <meta property="article:tag" content="hyper-v">
@@ -103,13 +103,10 @@
 <li><p>When you finish all the required restarts, reserve the port you want so hyper-v doesn’t reserve it back</p>
 </li>
 </ol>
-   <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh int ipv4 add excludedportrange protocol=tcp startport=<span class="number">60338</span> numberofports=<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-
+   <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">netsh int ipv4 set dynamicport tcp start=<span class="number">30000</span> num=<span class="number">16383</span></span><br><span class="line"></span><br><span class="line">netsh int ipv4 add excludedportrange protocol=tcp startport=<span class="number">60338</span> numberofports=<span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 <ol start="3">
-<li><p>Re-Enable hyper-V (which will require a couple of restart)</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dism.exe /Online /<span class="built_in">Enable-Feature</span>:Microsoft<span class="literal">-Hyper</span><span class="literal">-V</span> /All</span><br></pre></td></tr></table></figure>
+<li>Re-Enable hyper-V (which will require a couple of restart)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   dism.exe &#x2F;Online &#x2F;Enable-Feature:Microsoft-Hyper-V &#x2F;All</span><br><span class="line">&#96;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -118,6 +115,10 @@
 <p>when your system is back, you will be able to bind to that port successfully.</p>
 <p>查看win10 开启hyper-v后的保留端口有哪些，查看命令如下：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh interface ipv4 show excludedportrange protocol=tcp</span><br></pre></td></tr></table></figure>
+
+
+
+
 
 
       
@@ -182,7 +183,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/canal/" style="font-size: 10px;">canal</a> <a href="/tags/docker/" style="font-size: 17.5px;">docker</a> <a href="/tags/fastdfs/" style="font-size: 10px;">fastdfs</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/gui/" style="font-size: 10px;">gui</a> <a href="/tags/hyper-v/" style="font-size: 10px;">hyper-v</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/lua/" style="font-size: 12.5px;">lua</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/openresty/" style="font-size: 15px;">openresty</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/win10/" style="font-size: 12.5px;">win10</a> <a href="/tags/windows10/" style="font-size: 10px;">windows10</a> <a href="/tags/wsl/" style="font-size: 10px;">wsl</a> <a href="/tags/wsl1/" style="font-size: 10px;">wsl1</a> <a href="/tags/wsl2/" style="font-size: 12.5px;">wsl2</a>
+      <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/canal/" style="font-size: 12.5px;">canal</a> <a href="/tags/docker/" style="font-size: 17.5px;">docker</a> <a href="/tags/fastdfs/" style="font-size: 10px;">fastdfs</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/gui/" style="font-size: 10px;">gui</a> <a href="/tags/hyper-v/" style="font-size: 10px;">hyper-v</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/lua/" style="font-size: 12.5px;">lua</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/openresty/" style="font-size: 15px;">openresty</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/win10/" style="font-size: 12.5px;">win10</a> <a href="/tags/windows10/" style="font-size: 10px;">windows10</a> <a href="/tags/wsl/" style="font-size: 10px;">wsl</a> <a href="/tags/wsl1/" style="font-size: 10px;">wsl1</a> <a href="/tags/wsl2/" style="font-size: 12.5px;">wsl2</a>
     </div>
   </div>
 
@@ -204,23 +205,23 @@
       <ul>
         
           <li>
+            <a href="/2020/08/11/Mysql-Host-is-blocked-because-of-many-connection-errors/">Mysql Host is blocked because of many connection errors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/canal%E5%90%8C%E6%AD%A5MySQL%E6%95%B0%E6%8D%AE%E9%85%8D%E7%BD%AE/">canal同步MySQL数据配置</a>
+          </li>
+        
+          <li>
             <a href="/2020/08/03/docker%E4%B8%8Acanal%E5%AE%B9%E5%99%A8%E7%9A%84%E5%AE%89%E8%A3%85/">docker上canal容器的安装</a>
           </li>
         
           <li>
-            <a href="/2020/08/03/MySQL%E5%BC%80%E5%90%AFbinlog%E6%97%A5%E5%BF%97%E6%A8%A1/">MySQL开启binlog日志模式</a>
+            <a href="/2020/08/03/MySQL%E5%BC%80%E5%90%AFbinlog%E6%97%A5%E5%BF%97%E6%A8%A1%E5%BC%8F/">MySQL开启binlog日志模式</a>
           </li>
         
           <li>
             <a href="/2020/08/01/openresty%E4%BD%BF%E7%94%A8lua%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E5%B9%BF%E5%91%8A%E7%BC%93%E5%AD%98/">openresty使用lua脚本实现广告缓存.md</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/28/docker%E8%BF%90%E8%A1%8Credis/">docker运行redis.md</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/28/openresty%E6%B5%8B%E8%AF%95%E5%B9%BF%E5%91%8A%E5%9B%BE%E7%89%87%E7%9A%84%E8%BD%BD%E5%85%A5%E4%B8%8E%E8%AF%BB%E5%8F%96/">openresty测试广告图片的载入与读取.md</a>
           </li>
         
       </ul>

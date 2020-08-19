@@ -64,6 +64,171 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Mysql-Host-is-blocked-because-of-many-connection-errors" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/11/Mysql-Host-is-blocked-because-of-many-connection-errors/" class="article-date">
+  <time datetime="2020-08-11T13:44:49.000Z" itemprop="datePublished">2020-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/11/Mysql-Host-is-blocked-because-of-many-connection-errors/">Mysql Host is blocked because of many connection errors</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>应用环境：mysql8</p>
+<p>报错日志：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create connection error, url: jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;db_wang?useUnicode&#x3D;true&amp;characterEncoding&#x3D;UTF-8, errorCode 1129, state HY000java.sql.SQLException: null, message from server: &quot;Host &#39;127.0.0.1&#39; is blocked because of many connection errors; unblock with &#39;mysqladmin flush-hosts&#39;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>原因：</p>
+<p>　　同一个ip在短时间内产生太多（超过mysql数据库max_connection_errors的最大值）中断的数据库连接而导致的阻塞；</p>
+<p>解决方法：</p>
+<p><strong>1、提高允许的max_connect_errors数量（这种方法不彻底，后期还可能导致异常出现）：</strong></p>
+<p>　 进入Mysql数据库查看max_connect_errors： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#39;max_connect_errors&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>  修改max_connect_errors的数量为1000：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set global max_connect_errors &#x3D; 1000;</span><br></pre></td></tr></table></figure>
+
+<p>  查看是否修改成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#39;max_connect_errors&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>永久解决该问题需要去修改mysql的配置文件，其路径为：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/mysql/my.cnf</span><br></pre></td></tr></table></figure>
+
+<p>配置文件中新增以下内容：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">max_connect_errors</span>=<span class="string">1000</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>2、使用mysqladmin flush-hosts 命令清理一下hosts文件</strong></p>
+<p>在数据库中进行，命令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush hosts</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>由于修改mysql配置文件的参数写错了，导致mysql无法启动。通过docker inspect [containerID ]查看信息,找到其中的MergedDir的一长串数字：b57a740dc9670d264c695f4a136b6e46e42240d758939ad65cf173061aa7d4c8</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;Id&quot;: &quot;9b8323b8b7763a3d1dfb80aac771434fb26194eca4a1dd5d7cc615d3ef71e39b&quot;,</span><br><span class="line">        &quot;Created&quot;: &quot;2020-07-19T01:36:04.9869417Z&quot;,</span><br><span class="line">        &quot;Path&quot;: &quot;docker-entrypoint.sh&quot;,</span><br><span class="line">        &quot;Args&quot;: [</span><br><span class="line">            &quot;mysqld&quot;</span><br><span class="line">        ],</span><br><span class="line">        &quot;State&quot;: &#123;</span><br><span class="line">            &quot;Status&quot;: &quot;running&quot;,</span><br><span class="line">            &quot;Running&quot;: true,</span><br><span class="line">            &quot;Paused&quot;: false,</span><br><span class="line">            &quot;Restarting&quot;: false,</span><br><span class="line">            &quot;OOMKilled&quot;: false,</span><br><span class="line">            &quot;Dead&quot;: false,</span><br><span class="line">            &quot;Pid&quot;: 9019,</span><br><span class="line">            &quot;ExitCode&quot;: 0,</span><br><span class="line">            &quot;Error&quot;: &quot;&quot;,</span><br><span class="line">            &quot;StartedAt&quot;: &quot;2020-08-13T14:02:18.4352637Z&quot;,</span><br><span class="line">            &quot;FinishedAt&quot;: &quot;2020-08-13T14:01:18.2451932Z&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Image&quot;: &quot;sha256:6e447ce4863d6c90060feaf987711478b4f0bd6e555f6a2a29d43d2163865194&quot;,</span><br><span class="line">        &quot;ResolvConfPath&quot;: &quot;&#x2F;var&#x2F;lib&#x2F;docker&#x2F;containers&#x2F;9b8323b8b7763a3d1dfb80aac771434fb26194eca4a1dd5d7cc615d3ef71e39b&#x2F;resolv.conf&quot;,</span><br><span class="line">        &quot;HostnamePath&quot;: &quot;&#x2F;var&#x2F;lib&#x2F;docker&#x2F;containers&#x2F;9b8323b8b7763a3d1dfb80aac771434fb26194eca4a1dd5d7cc615d3ef71e39b&#x2F;hostname&quot;,</span><br><span class="line">        &quot;HostsPath&quot;: &quot;&#x2F;var&#x2F;lib&#x2F;docker&#x2F;containers&#x2F;9b8323b8b7763a3d1dfb80aac771434fb26194eca4a1dd5d7cc615d3ef71e39b&#x2F;hosts&quot;,</span><br><span class="line">        &quot;LogPath&quot;: &quot;&#x2F;var&#x2F;lib&#x2F;docker&#x2F;containers&#x2F;9b8323b8b7763a3d1dfb80aac771434fb26194eca4a1dd5d7cc615d3ef71e39b&#x2F;9b8323b8b7763a3d1dfb80aac771434fb26194eca4a1dd5d7cc615d3ef71e39b-json.log&quot;,</span><br><span class="line">        &quot;Name&quot;: &quot;&#x2F;mysql&quot;,</span><br><span class="line">        &quot;RestartCount&quot;: 33,</span><br><span class="line">        &quot;Driver&quot;: &quot;overlay2&quot;,</span><br><span class="line">        &quot;Platform&quot;: &quot;linux&quot;,</span><br><span class="line">        &quot;MountLabel&quot;: &quot;&quot;,</span><br><span class="line">        &quot;ProcessLabel&quot;: &quot;&quot;,</span><br><span class="line">        &quot;AppArmorProfile&quot;: &quot;&quot;,</span><br><span class="line">        &quot;ExecIDs&quot;: null,</span><br><span class="line">        &quot;HostConfig&quot;: &#123;</span><br><span class="line">            &quot;Binds&quot;: [</span><br><span class="line">                &quot;&#x2F;run&#x2F;desktop&#x2F;mnt&#x2F;host&#x2F;wsl&#x2F;docker-desktop-bind-mounts&#x2F;Ubuntu-18.04&#x2F;8ac66888ddc5ab7e65547448cc3887d4bcb4a4335f01797f501e1bdbe2d4c064:&#x2F;etc&#x2F;mysql&#x2F;conf.d&#x2F;&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;ContainerIDFile&quot;: &quot;&quot;,</span><br><span class="line">            &quot;LogConfig&quot;: &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;json-file&quot;,</span><br><span class="line">                &quot;Config&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;NetworkMode&quot;: &quot;default&quot;,</span><br><span class="line">            &quot;PortBindings&quot;: &#123;</span><br><span class="line">                &quot;3306&#x2F;tcp&quot;: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        &quot;HostIp&quot;: &quot;&quot;,</span><br><span class="line">                        &quot;HostPort&quot;: &quot;3306&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;RestartPolicy&quot;: &#123;</span><br><span class="line">                &quot;Name&quot;: &quot;always&quot;,</span><br><span class="line">                &quot;MaximumRetryCount&quot;: 0</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;AutoRemove&quot;: false,</span><br><span class="line">            &quot;VolumeDriver&quot;: &quot;&quot;,</span><br><span class="line">            &quot;VolumesFrom&quot;: null,</span><br><span class="line">            &quot;CapAdd&quot;: null,</span><br><span class="line">            &quot;CapDrop&quot;: null,</span><br><span class="line">            &quot;Capabilities&quot;: null,</span><br><span class="line">            &quot;Dns&quot;: [],</span><br><span class="line">            &quot;DnsOptions&quot;: [],</span><br><span class="line">            &quot;DnsSearch&quot;: [],</span><br><span class="line">            &quot;ExtraHosts&quot;: null,</span><br><span class="line">            &quot;GroupAdd&quot;: null,</span><br><span class="line">            &quot;IpcMode&quot;: &quot;private&quot;,</span><br><span class="line">            &quot;Cgroup&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Links&quot;: null,</span><br><span class="line">            &quot;OomScoreAdj&quot;: 0,</span><br><span class="line">            &quot;PidMode&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Privileged&quot;: false,</span><br><span class="line">            &quot;PublishAllPorts&quot;: false,</span><br><span class="line">            &quot;ReadonlyRootfs&quot;: false,</span><br><span class="line">            &quot;SecurityOpt&quot;: null,</span><br><span class="line">            &quot;UTSMode&quot;: &quot;&quot;,</span><br><span class="line">            &quot;UsernsMode&quot;: &quot;&quot;,</span><br><span class="line">            &quot;ShmSize&quot;: 67108864,</span><br><span class="line">            &quot;Runtime&quot;: &quot;runc&quot;,</span><br><span class="line">            &quot;ConsoleSize&quot;: [</span><br><span class="line">                0,</span><br><span class="line">                0</span><br><span class="line">            ],</span><br><span class="line">            &quot;Isolation&quot;: &quot;&quot;,</span><br><span class="line">            &quot;CpuShares&quot;: 0,</span><br><span class="line">            &quot;Memory&quot;: 0,</span><br><span class="line">            &quot;NanoCpus&quot;: 0,</span><br><span class="line">            &quot;CgroupParent&quot;: &quot;&quot;,</span><br><span class="line">            &quot;BlkioWeight&quot;: 0,</span><br><span class="line">            &quot;BlkioWeightDevice&quot;: [],</span><br><span class="line">            &quot;BlkioDeviceReadBps&quot;: null,</span><br><span class="line">            &quot;BlkioDeviceWriteBps&quot;: null,</span><br><span class="line">            &quot;BlkioDeviceReadIOps&quot;: null,</span><br><span class="line">            &quot;BlkioDeviceWriteIOps&quot;: null,</span><br><span class="line">            &quot;CpuPeriod&quot;: 0,</span><br><span class="line">            &quot;CpuQuota&quot;: 0,</span><br><span class="line">            &quot;CpuRealtimePeriod&quot;: 0,</span><br><span class="line">            &quot;CpuRealtimeRuntime&quot;: 0,</span><br><span class="line">            &quot;CpusetCpus&quot;: &quot;&quot;,</span><br><span class="line">            &quot;CpusetMems&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Devices&quot;: [],</span><br><span class="line">            &quot;DeviceCgroupRules&quot;: null,</span><br><span class="line">            &quot;DeviceRequests&quot;: null,</span><br><span class="line">            &quot;KernelMemory&quot;: 0,</span><br><span class="line">            &quot;KernelMemoryTCP&quot;: 0,</span><br><span class="line">            &quot;MemoryReservation&quot;: 0,</span><br><span class="line">            &quot;MemorySwap&quot;: 0,</span><br><span class="line">            &quot;MemorySwappiness&quot;: null,</span><br><span class="line">            &quot;OomKillDisable&quot;: false,</span><br><span class="line">            &quot;PidsLimit&quot;: null,</span><br><span class="line">            &quot;Ulimits&quot;: null,</span><br><span class="line">            &quot;CpuCount&quot;: 0,</span><br><span class="line">            &quot;CpuPercent&quot;: 0,</span><br><span class="line">            &quot;IOMaximumIOps&quot;: 0,</span><br><span class="line">            &quot;IOMaximumBandwidth&quot;: 0,</span><br><span class="line">            &quot;MaskedPaths&quot;: [</span><br><span class="line">                &quot;&#x2F;proc&#x2F;asound&quot;,</span><br><span class="line">                &quot;&#x2F;proc&#x2F;acpi&quot;,</span><br><span class="line">                &quot;&#x2F;proc&#x2F;kcore&quot;,</span><br><span class="line">                &quot;&#x2F;proc&#x2F;keys&quot;,</span><br><span class="line">                &quot;&#x2F;proc&#x2F;latency_stats&quot;,</span><br><span class="line">                &quot;&#x2F;proc&#x2F;timer_list&quot;,</span><br><span class="line">                &quot;&#x2F;proc&#x2F;timer_stats&quot;,</span><br><span class="line">                &quot;&#x2F;proc&#x2F;sched_debug&quot;,</span><br><span class="line">                &quot;&#x2F;proc&#x2F;scsi&quot;,</span><br><span class="line">                &quot;&#x2F;sys&#x2F;firmware&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;ReadonlyPaths&quot;: [</span><br><span class="line">                &quot;&#x2F;proc&#x2F;bus&quot;,</span><br><span class="line">                &quot;&#x2F;proc&#x2F;fs&quot;,</span><br><span class="line">                &quot;&#x2F;proc&#x2F;irq&quot;,</span><br><span class="line">                &quot;&#x2F;proc&#x2F;sys&quot;,</span><br><span class="line">                &quot;&#x2F;proc&#x2F;sysrq-trigger&quot;</span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;GraphDriver&quot;: &#123;</span><br><span class="line">            &quot;Data&quot;: &#123;</span><br><span class="line">                &quot;LowerDir&quot;: &quot;&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;b57a740dc9670d264c695f4a136b6e46e42240d758939ad65cf173061aa7d4c8-init&#x2F;diff:&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;87bce582fd488931cbca972b7f61519d38385f23ee80836a39ba7014f5635ac9&#x2F;diff:&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;6318730f8743d157082c93ee9c886195c1c3176eb11de567cbdfd6f54e774f16&#x2F;diff:&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;90c656399664ce30503470bd363bca2d1ccfd0da154308a77e601ed8f48d281f&#x2F;diff:&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;3172f465ad7c6b6e44a80c55409a0afb3bfd1cbc0a16deac0f801a86f05fc4f2&#x2F;diff:&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;1f5e3f31d2d978b51ed5130c89f57ac02ef30772c82c433e7f8673ddf3c938d0&#x2F;diff:&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;dadebaa0e1f9e01ac76d8232f002f070f9f2cb3c2a0067617eebd91d36dd07cb&#x2F;diff:&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;dce19b1ae50b568c46c9a16842ca8e48ee2ffd377d0cede2aa9e4b4aa08af803&#x2F;diff:&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;30f4e49dcefb302fe24e6629c67cd45d6078405d70eca990703cc7d62b69430d&#x2F;diff:&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;fd7265a988a0a0d03b3d7ee3b5da5f80db44284d2437ebfad75bd6e5b7444076&#x2F;diff:&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;e42a211354ae74210f3e316c3e2e85435f6c7da4edfa32448d259cfd4de0b17a&#x2F;diff:&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;d1bd8e90a8c29b5a6257e23ac38dcc423b589a3620b5e2e5aaf6605d0578f111&#x2F;diff:&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;82365cdb0dc4095e9d9b5d894ed81e38fbe8256600ecc0b4f6054b18c4b468fc&#x2F;diff&quot;,</span><br><span class="line">                &quot;MergedDir&quot;: &quot;&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;b57a740dc9670d264c695f4a136b6e46e42240d758939ad65cf173061aa7d4c8&#x2F;merged&quot;,</span><br><span class="line">                &quot;UpperDir&quot;: &quot;&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;b57a740dc9670d264c695f4a136b6e46e42240d758939ad65cf173061aa7d4c8&#x2F;diff&quot;,</span><br><span class="line">                &quot;WorkDir&quot;: &quot;&#x2F;var&#x2F;lib&#x2F;docker&#x2F;overlay2&#x2F;b57a740dc9670d264c695f4a136b6e46e42240d758939ad65cf173061aa7d4c8&#x2F;work&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Name&quot;: &quot;overlay2&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;Mounts&quot;: [</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;bind&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;&#x2F;run&#x2F;desktop&#x2F;mnt&#x2F;host&#x2F;wsl&#x2F;docker-desktop-bind-mounts&#x2F;Ubuntu-18.04&#x2F;8ac66888ddc5ab7e65547448cc3887d4bcb4a4335f01797f501e1bdbe2d4c064&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;&#x2F;etc&#x2F;mysql&#x2F;conf.d&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;rprivate&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;volume&quot;,</span><br><span class="line">                &quot;Name&quot;: &quot;ba28bfba87629a808db1d89e7c631c59afb46b7c1717dafeea4862e9cd01c74f&quot;,</span><br><span class="line">                &quot;Source&quot;: &quot;&#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes&#x2F;ba28bfba87629a808db1d89e7c631c59afb46b7c1717dafeea4862e9cd01c74f&#x2F;_data&quot;,</span><br><span class="line">                &quot;Destination&quot;: &quot;&#x2F;var&#x2F;lib&#x2F;mysql&quot;,</span><br><span class="line">                &quot;Driver&quot;: &quot;local&quot;,</span><br><span class="line">                &quot;Mode&quot;: &quot;&quot;,</span><br><span class="line">                &quot;RW&quot;: true,</span><br><span class="line">                &quot;Propagation&quot;: &quot;&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        &quot;Config&quot;: &#123;</span><br><span class="line">            &quot;Hostname&quot;: &quot;9b8323b8b776&quot;,</span><br><span class="line">            &quot;Domainname&quot;: &quot;&quot;,</span><br><span class="line">            &quot;User&quot;: &quot;&quot;,</span><br><span class="line">            &quot;AttachStdin&quot;: false,</span><br><span class="line">            &quot;AttachStdout&quot;: false,</span><br><span class="line">            &quot;AttachStderr&quot;: false,</span><br><span class="line">            &quot;ExposedPorts&quot;: &#123;</span><br><span class="line">                &quot;3306&#x2F;tcp&quot;: &#123;&#125;,</span><br><span class="line">                &quot;33060&#x2F;tcp&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;Tty&quot;: false,</span><br><span class="line">            &quot;OpenStdin&quot;: false,</span><br><span class="line">            &quot;StdinOnce&quot;: false,</span><br><span class="line">            &quot;Env&quot;: [</span><br><span class="line">                &quot;MYSQL_ROOT_PASSWORD&#x3D;password&quot;,</span><br><span class="line">                &quot;PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;sbin:&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;usr&#x2F;sbin:&#x2F;usr&#x2F;bin:&#x2F;sbin:&#x2F;bin&quot;,</span><br><span class="line">                &quot;GOSU_VERSION&#x3D;1.12&quot;,</span><br><span class="line">                &quot;MYSQL_MAJOR&#x3D;8.0&quot;,</span><br><span class="line">                &quot;MYSQL_VERSION&#x3D;8.0.21-1debian10&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Cmd&quot;: [</span><br><span class="line">                &quot;mysqld&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Image&quot;: &quot;mysql&quot;,</span><br><span class="line">            &quot;Volumes&quot;: &#123;</span><br><span class="line">                &quot;&#x2F;var&#x2F;lib&#x2F;mysql&quot;: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;WorkingDir&quot;: &quot;&quot;,</span><br><span class="line">            &quot;Entrypoint&quot;: [</span><br><span class="line">                &quot;docker-entrypoint.sh&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;OnBuild&quot;: null,</span><br><span class="line">            &quot;Labels&quot;: &#123;</span><br><span class="line">                &quot;desktop.docker.io&#x2F;wsl-distro&quot;: &quot;Ubuntu-18.04&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;NetworkSettings&quot;: &#123;</span><br><span class="line">            &quot;Bridge&quot;: &quot;&quot;,</span><br><span class="line">            &quot;SandboxID&quot;: &quot;dd439fc5e2ee3fa27e421e0fe3b4ece1c120b98b6961ecdc6ee42b40d43c4a83&quot;,</span><br><span class="line">            &quot;HairpinMode&quot;: false,</span><br><span class="line">            &quot;LinkLocalIPv6Address&quot;: &quot;&quot;,</span><br><span class="line">            &quot;LinkLocalIPv6PrefixLen&quot;: 0,</span><br><span class="line">            &quot;Ports&quot;: &#123;</span><br><span class="line">                &quot;3306&#x2F;tcp&quot;: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        &quot;HostIp&quot;: &quot;0.0.0.0&quot;,</span><br><span class="line">                        &quot;HostPort&quot;: &quot;3306&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                ],</span><br><span class="line">                &quot;33060&#x2F;tcp&quot;: null</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;SandboxKey&quot;: &quot;&#x2F;var&#x2F;run&#x2F;docker&#x2F;netns&#x2F;dd439fc5e2ee&quot;,</span><br><span class="line">            &quot;SecondaryIPAddresses&quot;: null,</span><br><span class="line">            &quot;SecondaryIPv6Addresses&quot;: null,</span><br><span class="line">            &quot;EndpointID&quot;: &quot;3c0a3abec042c8f3d01cbfcce771521084e20943f73b821c28b807516057b52b&quot;,</span><br><span class="line">            &quot;Gateway&quot;: &quot;172.17.0.1&quot;,</span><br><span class="line">            &quot;GlobalIPv6Address&quot;: &quot;&quot;,</span><br><span class="line">            &quot;GlobalIPv6PrefixLen&quot;: 0,</span><br><span class="line">            &quot;IPAddress&quot;: &quot;172.17.0.3&quot;,</span><br><span class="line">            &quot;IPPrefixLen&quot;: 16,</span><br><span class="line">            &quot;IPv6Gateway&quot;: &quot;&quot;,</span><br><span class="line">            &quot;MacAddress&quot;: &quot;02:42:ac:11:00:03&quot;,</span><br><span class="line">            &quot;Networks&quot;: &#123;</span><br><span class="line">                &quot;bridge&quot;: &#123;</span><br><span class="line">                    &quot;IPAMConfig&quot;: null,</span><br><span class="line">                    &quot;Links&quot;: null,</span><br><span class="line">                    &quot;Aliases&quot;: null,</span><br><span class="line">                    &quot;NetworkID&quot;: &quot;2ba376b58dbcaaf7977f6259c8c531d75e2054834e7229b2fb3067ae4b498cf6&quot;,</span><br><span class="line">                    &quot;EndpointID&quot;: &quot;3c0a3abec042c8f3d01cbfcce771521084e20943f73b821c28b807516057b52b&quot;,</span><br><span class="line">                    &quot;Gateway&quot;: &quot;172.17.0.1&quot;,</span><br><span class="line">                    &quot;IPAddress&quot;: &quot;172.17.0.3&quot;,</span><br><span class="line">                    &quot;IPPrefixLen&quot;: 16,</span><br><span class="line">                    &quot;IPv6Gateway&quot;: &quot;&quot;,</span><br><span class="line">                    &quot;GlobalIPv6Address&quot;: &quot;&quot;,</span><br><span class="line">                    &quot;GlobalIPv6PrefixLen&quot;: 0,</span><br><span class="line">                    &quot;MacAddress&quot;: &quot;02:42:ac:11:00:03&quot;,</span><br><span class="line">                    &quot;DriverOpts&quot;: null</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>然后通过执行下面的命令在系统中查找修改的mysql的配置文件：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo find / <span class="literal">-name</span> my.cnf|grep b57a740dc9670d264c695f4a136b6e46e42240d758939ad65cf173061aa7d4c8</span><br></pre></td></tr></table></figure>
+
+<p>其查找结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">find: ‘&#x2F;mnt&#x2F;g&#x2F;$RECYCLE.BIN&#x2F;S-1-5-21-3058031379-647561273-1717587388-1001’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;g&#x2F;$RECYCLE.BIN&#x2F;S-1-5-21-3367617486-1606150748-2973973356-1001’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;g&#x2F;System Volume Information’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;f&#x2F;$RECYCLE.BIN&#x2F;S-1-5-18’: Permission denied</span><br><span class="line">&#x2F;mnt&#x2F;wsl&#x2F;docker-desktop-data&#x2F;data&#x2F;docker&#x2F;overlay2&#x2F;b57a740dc9670d264c695f4a136b6e46e42240d758939ad65cf173061aa7d4c8&#x2F;diff&#x2F;etc&#x2F;mysql&#x2F;my.cnf</span><br><span class="line">&#x2F;mnt&#x2F;wsl&#x2F;docker-desktop-data&#x2F;version-pack-data&#x2F;community&#x2F;docker&#x2F;overlay2&#x2F;b57a740dc9670d264c695f4a136b6e46e42240d758939ad65cf173061aa7d4c8&#x2F;diff&#x2F;etc&#x2F;mysql&#x2F;my.cnf</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;f&#x2F;$RECYCLE.BIN&#x2F;S-1-5-21-1384193151-857152566-3001300872-1001’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;f&#x2F;$RECYCLE.BIN&#x2F;S-1-5-21-2754275188-1542917932-3877868850-1001’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;f&#x2F;$RECYCLE.BIN&#x2F;S-1-5-21-3058031379-647561273-1717587388-1001’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;f&#x2F;$RECYCLE.BIN&#x2F;S-1-5-21-3367617486-1606150748-2973973356-1001’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;f&#x2F;$RECYCLE.BIN&#x2F;S-1-5-21-3501511230-1569134962-2922809645-1001’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;f&#x2F;app&#x2F;laoma&#x2F;admin&#x2F;orcl&#x2F;adump’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;f&#x2F;app&#x2F;laoma&#x2F;admin&#x2F;orcl&#x2F;dpdump’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;f&#x2F;app&#x2F;laoma&#x2F;admin&#x2F;orcl&#x2F;pfile’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;f&#x2F;app&#x2F;laoma&#x2F;diag’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;f&#x2F;app&#x2F;laoma&#x2F;flash_recovery_area’: Permission denied</span><br><span class="line">find: ‘&#x2F;mnt&#x2F;f&#x2F;app&#x2F;laoma&#x2F;oradata&#x2F;orcl’: Permission denied</span><br></pre></td></tr></table></figure>
+
+<p>其中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;mnt&#x2F;wsl&#x2F;docker-desktop-data&#x2F;data&#x2F;docker&#x2F;overlay2&#x2F;b57a740dc9670d264c695f4a136b6e46e42240d758939ad65cf173061aa7d4c8&#x2F;diff&#x2F;etc&#x2F;mysql&#x2F;my.cnf</span><br></pre></td></tr></table></figure>
+
+<p>就是docker 的MySQL容器的配置文件。故可以使用以下命令修改配置文件：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /mnt/wsl/docker<span class="literal">-desktop</span><span class="literal">-data</span>/<span class="keyword">data</span>/docker/overlay2/b57a740dc9670d264c695f4a136b6e46e42240d758939ad65cf173061aa7d4c8/diff/etc/mysql/my.cnf</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/08/11/Mysql-Host-is-blocked-because-of-many-connection-errors/" data-id="cke1dy0cs0003akv1cs7nbu67" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-canal同步MySQL数据配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/08/canal%E5%90%8C%E6%AD%A5MySQL%E6%95%B0%E6%8D%AE%E9%85%8D%E7%BD%AE/" class="article-date">
+  <time datetime="2020-08-08T00:02:25.000Z" itemprop="datePublished">2020-08-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/08/canal%E5%90%8C%E6%AD%A5MySQL%E6%95%B0%E6%8D%AE%E9%85%8D%E7%BD%AE/">canal同步MySQL数据配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>从docker hub上pull canal容器;</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull canal:latest</span><br><span class="line"><span class="comment">#启动容器</span></span><br><span class="line">docker run <span class="literal">-p</span> <span class="number">11111</span>:<span class="number">11111</span> -<span class="literal">-name</span> canal <span class="literal">-d</span> docker.io/canal/canal<span class="literal">-server</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<p>   由于canal项目从2019年开始就没有维护了，其docker镜像已经无法正常使用；启动容器后会报Exited(139)错误。通过下载其在GitHub上的项目（<a href="https://github.com/alibaba/canal.git），查看器Dockerfile文件(canal/docker/base/Dockerfile)发现，其使用的基本镜像（CentOS6.10）存在的问题" target="_blank" rel="noopener">https://github.com/alibaba/canal.git），查看器Dockerfile文件(canal/docker/base/Dockerfile)发现，其使用的基本镜像（CentOS6.10）存在的问题</a>.</p>
+<p>   <img src="C:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200808082020843.png" alt="image-20200808082020843"></p>
+<p>   解决办法：将基础镜像改为centos7；</p>
+<p>   再解决该问题，再构建是项目时候发现，centos7不支持service命令，再改项目中的canal/docker/image/alidata/bin/main.sh脚本中，使用该命令启动sshd与crond服务，故需要将命令改成如下：</p>
+<p>   <img src="C:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200808083645199.png" alt="image-20200808083645199"></p>
+   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exec /usr/sbin/init</span><br><span class="line">systemctl start sshd</span><br><span class="line">systemctl start crond</span><br></pre></td></tr></table></figure>
+
+<p>   然后pull下来的项目中的canal/docker目录下开始构建镜像:</p>
+   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./build.sh base</span><br><span class="line">./build.sh base_v2</span><br><span class="line">./build.sh base_admin</span><br><span class="line">./build.sh admin</span><br><span class="line">sh build.sh</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>进入canal容器</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec <span class="literal">-it</span> canal /bin/bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>切换到canal配置目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd canal-server&#x2F;conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="C:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200808084542257.png" alt="image-20200808084542257"></p>
+<p>进入容器,修改核心配置canal.properties 和instance.properties，canal.properties 是canal自身的配置，instance.properties是需要同步数据的数据库连接配置。</p>
+</li>
+<li><p>修改instance.properties,配置数据库连接地址:</p>
+<p><img src="C:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200808085055059.png" alt="image-20200808085055059"></p>
+<p>这里的canal.instance.filter.regex有多种配置，如下：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mysql</span> <span class="string">数据解析关注的表，Perl正则表达式.</span></span><br><span class="line"><span class="meta">多个正则之间以逗号(,)分隔，转义符需要双斜杠(\\)</span> <span class="string"></span></span><br><span class="line"><span class="attr">常见例子：</span></span><br><span class="line"><span class="meta">1.</span>  <span class="string">所有表：.*   or  .*\\..*</span></span><br><span class="line"><span class="meta">2.</span>  <span class="string">canal schema下所有表： canal\\..*</span></span><br><span class="line"><span class="meta">3.</span>  <span class="string">canal下的以canal打头的表：canal\\.canal.*</span></span><br><span class="line"><span class="meta">4.</span>  <span class="string">canal schema下的一张表：canal.test1</span></span><br><span class="line"><span class="meta">5.</span>  <span class="string">多个规则组合使用：canal\\..*,mysql.test1,mysql.test2 (逗号分隔)</span></span><br><span class="line"><span class="meta">注意：此过滤条件只针对row模式的数据有效(ps.</span> <span class="string">mixed/statement因为不解析sql，所以无法准确提取tableName进行过滤)</span></span><br></pre></td></tr></table></figure>
+
+<p>可以参考地址中的说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;alibaba&#x2F;canal&#x2F;wiki&#x2F;AdminGuide</span><br></pre></td></tr></table></figure>
+
+<p>配置完成后，设置开机启动，并重启canal。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker update -<span class="literal">-restart</span>=always canal</span><br><span class="line">docker restart canal</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/08/08/canal%E5%90%8C%E6%AD%A5MySQL%E6%95%B0%E6%8D%AE%E9%85%8D%E7%BD%AE/" data-id="cke1dy0cr0002akv18x9i73en" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/canal/" rel="tag">canal</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-docker上canal容器的安装" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/08/03/docker%E4%B8%8Acanal%E5%AE%B9%E5%99%A8%E7%9A%84%E5%AE%89%E8%A3%85/" class="article-date">
@@ -108,9 +273,9 @@
 
 
   
-    <article id="post-MySQL开启binlog日志模" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-MySQL开启binlog日志模式" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/08/03/MySQL%E5%BC%80%E5%90%AFbinlog%E6%97%A5%E5%BF%97%E6%A8%A1/" class="article-date">
+    <a href="/2020/08/03/MySQL%E5%BC%80%E5%90%AFbinlog%E6%97%A5%E5%BF%97%E6%A8%A1%E5%BC%8F/" class="article-date">
   <time datetime="2020-08-03T13:03:35.000Z" itemprop="datePublished">2020-08-03</time>
 </a>
     
@@ -122,7 +287,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/03/MySQL%E5%BC%80%E5%90%AFbinlog%E6%97%A5%E5%BF%97%E6%A8%A1/">MySQL开启binlog日志模式</a>
+      <a class="article-title" href="/2020/08/03/MySQL%E5%BC%80%E5%90%AFbinlog%E6%97%A5%E5%BF%97%E6%A8%A1%E5%BC%8F/">MySQL开启binlog日志模式</a>
     </h1>
   
 
@@ -131,12 +296,12 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>(1) docke中的mysql开启binlog日志模式：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#进入docker容器</span></span><br><span class="line">docker exec <span class="literal">-it</span> mysql /bin/bash</span><br><span class="line"><span class="comment">#由于该容器没有vi或者vim编辑器,需要安装vi或者vim编辑器</span></span><br><span class="line">apt<span class="literal">-get</span> update</span><br><span class="line"><span class="comment">#安装vim编辑器</span></span><br><span class="line">apt<span class="literal">-get</span> <span class="literal">-y</span> install vim</span><br><span class="line"><span class="comment">#MySQL 配置文件的路径</span></span><br><span class="line">cd /etc/mysql/my.cnf</span><br><span class="line"><span class="comment">#编辑my.cnf文件</span></span><br><span class="line">vim my.cnf</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#进入docker容器</span></span><br><span class="line">docker exec <span class="literal">-it</span> mysql /bin/bash</span><br><span class="line"><span class="comment">#由于该容器没有vi或者vim编辑器,需要安装vi或者vim编辑器</span></span><br><span class="line">apt<span class="literal">-get</span> update</span><br><span class="line"><span class="comment">#安装vim编辑器</span></span><br><span class="line">apt<span class="literal">-get</span> <span class="literal">-y</span> install vim</span><br><span class="line"><span class="comment">#MySQL 配置文件的路径</span></span><br><span class="line">cd /etc/mysql</span><br><span class="line"><span class="comment">#编辑my.cnf文件</span></span><br><span class="line">vim my.cnf</span><br></pre></td></tr></table></figure>
 
 
 
-<p>在my.cnf文件中添加的配置为：</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">log-bin</span>=<span class="string">/var/lib/mysql/mysql-bin #二进制存储目录</span></span><br><span class="line"><span class="meta">server-id</span>=<span class="string">123456 #当前数据库的唯一编号</span></span><br></pre></td></tr></table></figure>
+<p>开启binlog日志模式，在my.cnf文件中添加的配置为：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">log-bin</span>=<span class="string">/var/lib/mysql/mysql-bin #二进制存储目录</span></span><br><span class="line"><span class="meta">server-id</span>=<span class="string">12345 #当前数据库的唯一编号</span></span><br></pre></td></tr></table></figure>
 
 <p>(2) 创建账号 用于测试使用</p>
 <p>使用root账号创建用户并授予权限</p>
@@ -149,7 +314,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/08/03/MySQL%E5%BC%80%E5%90%AFbinlog%E6%97%A5%E5%BF%97%E6%A8%A1/" data-id="ckdenfmmb00008cv16078cr1v" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/08/03/MySQL%E5%BC%80%E5%90%AFbinlog%E6%97%A5%E5%BF%97%E6%A8%A1%E5%BC%8F/" data-id="cke1dy0cj0000akv1bbn035wa" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/" rel="tag">MySQL</a></li></ul>
@@ -483,6 +648,51 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">## ip地址, eth0:</span><br><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
 
 
+
+<p>设置nginx开机启动：</p>
+<ol>
+<li><p>先安装sysv-rc-conf服务，在安装这个时候，报以下错误：</p>
+<p><img src="C:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200811205929614.png" alt="image-20200811205929614"></p>
+<p>这时候需要在Ubuntu的源中增加源</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#sudo vi /etc/apt/sources.list</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://archive.ubuntu.com/ubuntu/ trusty main universe restricted multiverse</span></span><br></pre></td></tr></table></figure>
+
+<p>源修改好后，执行下面的命令:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt<span class="literal">-get</span> update</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li><p>安装sysv-rc-conf服务</p>
+<p>我们自己编译安装的NGINX在/etc/init.d/下并没有管理脚本，所以我们现在还无法为NGINX设置自启动项，我们得先为NGINX在/etc/init.d/下创建一个启动脚本。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install sysv<span class="literal">-rc</span><span class="literal">-conf</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="3">
+<li><p>设置开机启动</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/init.d/nginx</span><br></pre></td></tr></table></figure>
+
+<p>内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line">#! &#x2F;bin&#x2F;sh</span><br><span class="line"># chkconfig: 2345 55 25</span><br><span class="line"># Description: Startup script for nginx webserver on Debian. Place in &#x2F;etc&#x2F;init.d and</span><br><span class="line"># run &#39;update-rc.d -f nginx defaults&#39;, or use the appropriate command on your</span><br><span class="line"># distro. For CentOS&#x2F;Redhat run: &#39;chkconfig --add nginx&#39;</span><br><span class="line"></span><br><span class="line">### BEGIN INIT INFO</span><br><span class="line"># Provides:          nginx</span><br><span class="line"># Required-Start:    $all</span><br><span class="line"># Required-Stop:     $all</span><br><span class="line"># Default-Start:     2 3 4 5</span><br><span class="line"># Default-Stop:      0 1 6</span><br><span class="line"># Short-Description: starts the nginx web server</span><br><span class="line"># Description:       starts nginx using start-stop-daemon</span><br><span class="line">### END INIT INFO</span><br><span class="line"></span><br><span class="line"># Author:   licess</span><br><span class="line"># website:  http:&#x2F;&#x2F;lnmp.org</span><br><span class="line"></span><br><span class="line">PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;sbin:&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;sbin:&#x2F;bin:&#x2F;usr&#x2F;sbin:&#x2F;usr&#x2F;bin</span><br><span class="line">NAME&#x3D;nginx</span><br><span class="line">NGINX_BIN&#x3D;&#x2F;usr&#x2F;local&#x2F;openresty&#x2F;nginx&#x2F;sbin&#x2F;$NAME</span><br><span class="line">CONFIGFILE&#x3D;&#x2F;usr&#x2F;local&#x2F;openresty&#x2F;nginx&#x2F;conf&#x2F;$NAME.conf</span><br><span class="line">PIDFILE&#x3D;&#x2F;usr&#x2F;local&#x2F;openresty&#x2F;nginx&#x2F;logs&#x2F;$NAME.pid</span><br><span class="line"></span><br><span class="line">case &quot;$1&quot; in</span><br><span class="line">    start)</span><br><span class="line">        echo -n &quot;Starting $NAME... &quot;</span><br><span class="line"></span><br><span class="line">        if netstat -tnpl | grep -q nginx;then</span><br><span class="line">            echo &quot;$NAME (pid &#96;pidof $NAME&#96;) already running.&quot;</span><br><span class="line">            exit 1</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        $NGINX_BIN -c $CONFIGFILE</span><br><span class="line"></span><br><span class="line">        if [ &quot;$?&quot; !&#x3D; 0 ] ; then</span><br><span class="line">            echo &quot; failed&quot;</span><br><span class="line">            exit 1</span><br><span class="line">        else</span><br><span class="line">            echo &quot; done&quot;</span><br><span class="line">        fi</span><br><span class="line">        ;;</span><br><span class="line"></span><br><span class="line">    stop)</span><br><span class="line">        echo -n &quot;Stoping $NAME... &quot;</span><br><span class="line"></span><br><span class="line">        if ! netstat -tnpl | grep -q nginx; then</span><br><span class="line">            echo &quot;$NAME is not running.&quot;</span><br><span class="line">            exit 1</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        $NGINX_BIN -s stop</span><br><span class="line"></span><br><span class="line">        if [ &quot;$?&quot; !&#x3D; 0 ] ; then</span><br><span class="line">            echo &quot; failed. Use force-quit&quot;</span><br><span class="line">            exit 1</span><br><span class="line">        else</span><br><span class="line">            echo &quot; done&quot;</span><br><span class="line">        fi</span><br><span class="line">        ;;</span><br><span class="line"></span><br><span class="line">    status)</span><br><span class="line">        if netstat -tnpl | grep -q nginx; then</span><br><span class="line">            PID&#x3D;&#96;pidof nginx&#96;</span><br><span class="line">            echo &quot;$NAME (pid $PID) is running...&quot;</span><br><span class="line">        else</span><br><span class="line">            echo &quot;$NAME is stopped&quot;</span><br><span class="line">            exit 0</span><br><span class="line">        fi</span><br><span class="line">        ;;</span><br><span class="line"></span><br><span class="line">    force-quit)</span><br><span class="line">        echo -n &quot;Terminating $NAME... &quot;</span><br><span class="line"></span><br><span class="line">        if ! netstat -tnpl | grep -q nginx; then</span><br><span class="line">            echo &quot;$NAME is not running.&quot;</span><br><span class="line">            exit 1</span><br><span class="line">        fi</span><br><span class="line"></span><br><span class="line">        kill &#96;pidof $NAME&#96;</span><br><span class="line"></span><br><span class="line">        if [ &quot;$?&quot; !&#x3D; 0 ] ; then</span><br><span class="line">            echo &quot; failed&quot;</span><br><span class="line">            exit 1</span><br><span class="line">        else</span><br><span class="line">            echo &quot; done&quot;</span><br><span class="line">        fi</span><br><span class="line">        ;;</span><br><span class="line"></span><br><span class="line">    restart)</span><br><span class="line">        $0 stop</span><br><span class="line">        sleep 1</span><br><span class="line">        $0 start</span><br><span class="line">        ;;</span><br><span class="line"></span><br><span class="line">    reload)</span><br><span class="line">        echo -n &quot;Reload service $NAME... &quot;</span><br><span class="line"></span><br><span class="line">        if netstat -tnpl | grep -q nginx; then</span><br><span class="line">            $NGINX_BIN -s reload</span><br><span class="line">            echo &quot; done&quot;</span><br><span class="line">        else</span><br><span class="line">            echo &quot;$NAME is not running, can&#39;t reload.&quot;</span><br><span class="line">            exit 1</span><br><span class="line">        fi</span><br><span class="line">        ;;</span><br><span class="line"></span><br><span class="line">    configtest)</span><br><span class="line">        echo -n &quot;Test $NAME configure files... &quot;</span><br><span class="line"></span><br><span class="line">        $NGINX_BIN -t</span><br><span class="line">        ;;</span><br><span class="line"></span><br><span class="line">    *)</span><br><span class="line">        echo &quot;Usage: $0 &#123;start|stop|force-quit|restart|reload|status|configtest&#125;&quot;</span><br><span class="line">        exit 1</span><br><span class="line">        ;;</span><br><span class="line"></span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<p>保存成功后，给这个文件授权:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x /etc/init.d/nginx</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们可以看看这个脚本能否正确执行:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/nginx restart <span class="comment">#这个管理脚本支持的命令有start|stop|force-quit|restart|reload|status|configtest</span></span><br></pre></td></tr></table></figure>
+
+<p>如果没有错误能正确执行，那我们可以开始把他加入启动项了：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo sysv<span class="literal">-rc</span><span class="literal">-conf</span> -<span class="literal">-list</span> <span class="comment">#我们先查看一下list中有没有我们刚刚加进去的这个nginx管理脚本</span></span><br><span class="line">sudo sysv<span class="literal">-rc</span><span class="literal">-conf</span> nginx on <span class="comment">#然后用这个命令添加开机自启动</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+
       
     </div>
     <footer class="article-footer">
@@ -498,101 +708,11 @@
 
 
   
-    <article id="post-ubuntu上安装lua" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85lua/" class="article-date">
-  <time datetime="2020-07-24T12:54:59.000Z" itemprop="datePublished">2020-07-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85lua/">ubuntu上安装lua.md</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在ubuntu上安装lua执行以下命令：</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#下载lua</span></span><br><span class="line"></span><br><span class="line"><span class="attr">curl</span> <span class="string">-R -O http://www.lua.org/ftp/lua-5.3.5.tar.gz</span></span><br><span class="line"><span class="attr">tar</span> <span class="string">zxf lua-5.3.5.tar.gz</span></span><br><span class="line"><span class="attr">cd</span> <span class="string">lua-5.3.5</span></span><br><span class="line"></span><br><span class="line"><span class="attr">make</span> <span class="string">linux test</span></span><br></pre></td></tr></table></figure>
-
-<p>这时候可能会因为缺少libreadline-gplv2-dev依赖库导致以下错误</p>
-<p><img src="C:%5CUsers%5Claoma%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200724205708628.png" alt="image-20200724205708628"></p>
-<p>安装libreadline-gplv2-dev依赖库：</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sudo</span> <span class="string">apt-get install libreadline-gplv2-dev</span></span><br></pre></td></tr></table></figure>
-
-<p>再次执行:</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">make</span> <span class="string">linux test</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">make install</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/24/ubuntu%E4%B8%8A%E5%AE%89%E8%A3%85lua/" data-id="ckd32yhlg00026sv13u2w1a8q" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ubuntu上更换apt的安装源" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/07/24/ubuntu%E4%B8%8A%E6%9B%B4%E6%8D%A2apt%E7%9A%84%E5%AE%89%E8%A3%85%E6%BA%90/" class="article-date">
-  <time datetime="2020-07-24T12:46:37.000Z" itemprop="datePublished">2020-07-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/24/ubuntu%E4%B8%8A%E6%9B%B4%E6%8D%A2apt%E7%9A%84%E5%AE%89%E8%A3%85%E6%BA%90/">ubuntu上更换apt的安装源.md</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Ubuntu默认的一些源在国内无法访问，切换为阿里云的速度更快：</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">修改阿里源为Ubuntu</span> <span class="string">18.04默认的源</span></span><br><span class="line"></span><br><span class="line"><span class="attr">备份/etc/apt/sources.list</span></span><br><span class="line"><span class="comment">#备份</span></span><br><span class="line"><span class="attr">cp</span> <span class="string">/etc/apt/sources.list /etc/apt/sources.list.bak</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#打开并编辑sources.list文件</span></span><br><span class="line"><span class="attr">vi</span> <span class="string">/etc/apt/source.list</span></span><br><span class="line"><span class="attr">v</span></span><br><span class="line"><span class="attr">在/etc/apt/sources.list文件前面添加如下条目</span></span><br><span class="line"><span class="comment">#添加阿里源</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="attr">deb</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="meta">deb-src</span> <span class="string">http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse</span></span><br><span class="line"></span><br><span class="line"><span class="attr">最后执行如下命令更新源</span></span><br><span class="line"><span class="comment">##更新</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">apt-get update</span></span><br><span class="line"><span class="attr">sudo</span> <span class="string">apt-get upgrade</span></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/24/ubuntu%E4%B8%8A%E6%9B%B4%E6%8D%A2apt%E7%9A%84%E5%AE%89%E8%A3%85%E6%BA%90/" data-id="ckdd490d6000ihsv19uoa5my0" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -623,7 +743,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/canal/" style="font-size: 10px;">canal</a> <a href="/tags/docker/" style="font-size: 17.5px;">docker</a> <a href="/tags/fastdfs/" style="font-size: 10px;">fastdfs</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/gui/" style="font-size: 10px;">gui</a> <a href="/tags/hyper-v/" style="font-size: 10px;">hyper-v</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/lua/" style="font-size: 12.5px;">lua</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/openresty/" style="font-size: 15px;">openresty</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/win10/" style="font-size: 12.5px;">win10</a> <a href="/tags/windows10/" style="font-size: 10px;">windows10</a> <a href="/tags/wsl/" style="font-size: 10px;">wsl</a> <a href="/tags/wsl1/" style="font-size: 10px;">wsl1</a> <a href="/tags/wsl2/" style="font-size: 12.5px;">wsl2</a>
+      <a href="/tags/MySQL/" style="font-size: 12.5px;">MySQL</a> <a href="/tags/canal/" style="font-size: 12.5px;">canal</a> <a href="/tags/docker/" style="font-size: 17.5px;">docker</a> <a href="/tags/fastdfs/" style="font-size: 10px;">fastdfs</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/gui/" style="font-size: 10px;">gui</a> <a href="/tags/hyper-v/" style="font-size: 10px;">hyper-v</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/lua/" style="font-size: 12.5px;">lua</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/openresty/" style="font-size: 15px;">openresty</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/ubuntu/" style="font-size: 20px;">ubuntu</a> <a href="/tags/win10/" style="font-size: 12.5px;">win10</a> <a href="/tags/windows10/" style="font-size: 10px;">windows10</a> <a href="/tags/wsl/" style="font-size: 10px;">wsl</a> <a href="/tags/wsl1/" style="font-size: 10px;">wsl1</a> <a href="/tags/wsl2/" style="font-size: 12.5px;">wsl2</a>
     </div>
   </div>
 
@@ -645,23 +765,23 @@
       <ul>
         
           <li>
+            <a href="/2020/08/11/Mysql-Host-is-blocked-because-of-many-connection-errors/">Mysql Host is blocked because of many connection errors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/canal%E5%90%8C%E6%AD%A5MySQL%E6%95%B0%E6%8D%AE%E9%85%8D%E7%BD%AE/">canal同步MySQL数据配置</a>
+          </li>
+        
+          <li>
             <a href="/2020/08/03/docker%E4%B8%8Acanal%E5%AE%B9%E5%99%A8%E7%9A%84%E5%AE%89%E8%A3%85/">docker上canal容器的安装</a>
           </li>
         
           <li>
-            <a href="/2020/08/03/MySQL%E5%BC%80%E5%90%AFbinlog%E6%97%A5%E5%BF%97%E6%A8%A1/">MySQL开启binlog日志模式</a>
+            <a href="/2020/08/03/MySQL%E5%BC%80%E5%90%AFbinlog%E6%97%A5%E5%BF%97%E6%A8%A1%E5%BC%8F/">MySQL开启binlog日志模式</a>
           </li>
         
           <li>
             <a href="/2020/08/01/openresty%E4%BD%BF%E7%94%A8lua%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E5%B9%BF%E5%91%8A%E7%BC%93%E5%AD%98/">openresty使用lua脚本实现广告缓存.md</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/28/docker%E8%BF%90%E8%A1%8Credis/">docker运行redis.md</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/28/openresty%E6%B5%8B%E8%AF%95%E5%B9%BF%E5%91%8A%E5%9B%BE%E7%89%87%E7%9A%84%E8%BD%BD%E5%85%A5%E4%B8%8E%E8%AF%BB%E5%8F%96/">openresty测试广告图片的载入与读取.md</a>
           </li>
         
       </ul>
